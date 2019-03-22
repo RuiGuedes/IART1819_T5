@@ -1,29 +1,63 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Level {
-    
-    private char[][] matrix = new char[18][18];
-    private Map<Character, Data> robots = new HashMap<>();
-    
-    public Level() {
-        //String filename = read_input();
-        //System.out.println(filename);
-        String filename = "maps/level.txt";
 
+    /**
+     * Bi-dimensional representation of map
+     */
+    private char[][] matrix = new char[18][18];
+
+    /**
+     * Data structure containing agents information
+     */
+    private Map<Character, Data> agents = new HashMap<>();
+
+    /**
+     * Initializes level class
+     */
+    Level() {
+        try {
+            read_file("maps/level.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Initializes level class
+     * @param filename Directory of the map to be read
+     */
+    public Level(String filename) {
         try {
             read_file(filename);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
+    /**
+     * Read filename
+     * @return Name of the file to be read
+     */
+    private String read_input() {
+        Scanner reader = new Scanner(System.in);
+        System.out.print("Enter level file name: ");
+        String filename = reader.nextLine();
+        reader.close();
+
+        return filename;
+    }
+
+
+    /**
+     * Reads map from a file and initializes matrix
+     * @param filename Name of the file to be read
+     * @throws FileNotFoundException
+     */
     private void read_file(String filename) throws FileNotFoundException {
 
         File fileLevel = new File(filename);
@@ -78,14 +112,14 @@ public class Level {
         matrix[y][x] = ' ';
         System.out.println(matrix[y][x]);
 
-        if(robots.containsKey(color)) {
-            robot = robots.get(color);
+        if(agents.containsKey(color)) {
+            robot = agents.get(color);
             robot.setCurrY(y);
             robot.setCurrX(x);
-            robots.put(color,robot);
+            agents.put(color,robot);
         } else {
             robot = new Data(x,y, -1, -1);
-            robots.put(color,robot);
+            agents.put(color,robot);
         }
     }
 
@@ -93,31 +127,51 @@ public class Level {
         Data robot;
         matrix[y][x] = ' ';
 
-        if(robots.containsKey(color)) {
-            robot = robots.get(color);
+        if(agents.containsKey(color)) {
+            robot = agents.get(color);
             robot.setTargetY(y);
             robot.setTargetX(x);
-            robots.put(color,robot);
+            agents.put(color,robot);
         } else {
             robot = new Data(-1,-1, x, y);
-            robots.put(color,robot);
+            agents.put(color,robot);
         }
     }
 
-    private String read_input() {
-        Scanner reader = new Scanner(System.in);
-        System.out.print("Enter level file name: ");
-        String filename = reader.nextLine();
-        reader.close();
-
-        return filename;
-    }
-
-    public char[][] getMatrix() {
+    /**
+     * Get matrix
+     * @return matrix
+     */
+    char[][] getMatrix() {
         return matrix;
     }
 
-    public Data getRobots(char r) {
-        return robots.get(r);
+    /**
+     * Get agent
+     * @param r Agent identifier
+     * @return Agent
+     */
+    Data getAgent(char r) {
+        return agents.get(r);
+    }
+
+    /**
+     * Get all agents
+     * @return Data structure containing all agents
+     */
+    public Map<Character, Data> getAgents() {
+        return agents;
+    }
+
+    /**
+     * Display matrix in a friendly way
+     */
+    void display() {
+        for (char[] row : matrix) {
+            for (char cell : row) {
+                System.out.print(cell + " ");
+            }
+            System.out.println();
+        }
     }
 }
