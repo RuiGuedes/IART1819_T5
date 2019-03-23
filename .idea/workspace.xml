@@ -2,11 +2,173 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee4ce63b-3353-4860-929c-a9b679fff994" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/core/Data.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/core/LabyrinthRobot.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/core/Level.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/Metrics.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/Node.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/NodeExpander.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/QueueBasedSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/QueueFactory$FifoQueueWithHashSet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/QueueFactory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/SearchForActions.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/SearchForStates.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/SearchUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/ActionsFunction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/BidirectionalProblem.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/GeneralProblem.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/GoalTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/OnlineSearchProblem.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/Problem.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/ResultFunction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/problem/StepCostFunction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/qsearch/BidirectionalSearch$ExtendedNode.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/qsearch/BidirectionalSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/qsearch/GraphSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/qsearch/GraphSearchBFS.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/qsearch/GraphSearchReducedFrontier.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/qsearch/QueueSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/framework/qsearch/TreeSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/informed/AStarSearch$EvalFunction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/informed/AStarSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/informed/BestFirstSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/informed/GreedyBestFirstSearch$EvalFunction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/informed/GreedyBestFirstSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/informed/HeuristicEvaluationFunction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/informed/Informed.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/uninformed/BreadthFirstSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/uninformed/DepthFirstSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/uninformed/DepthLimitedSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/uninformed/IterativeDeepeningSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/search/uninformed/UniformCostSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/ArrayIterator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/CancellableThread.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/DisjointSets$IdentityHashSet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/DisjointSets.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/FrequencyCounter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/JavaRandomizer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/MockRandomizer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/PowersOf2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/PowersOf2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/Randomizer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/SetOps.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/Tasks.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/Util.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/LabeledGraph.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/Pair.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/Table$Cell.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/Table$Row.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/Table.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/Triplet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/TwoKeyHashMap.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/XYLocation$Direction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/datastructure/XYLocation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/Interval.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/LUDecomposition.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/Matrix.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/MixedRadixNumber.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/Vector.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/CartesianPlot2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/IGroupParser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/SVGGroupParser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Circle2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Ellipse2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/IGeometric2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Line2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Point2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Polyline2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Ray2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Rect2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/TransformMatrix2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/geom/shapes/Vector2D.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/permute/CombinationGenerator$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/permute/CombinationGenerator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/permute/PermutationGenerator$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/permute/PermutationGenerator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/permute/PowerSetGenerator$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/IART1819_T5/util/math/permute/PowerSetGenerator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/LabyrinthRobot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/Metrics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/Node.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/NodeExpander.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/QueueBasedSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/QueueFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/SearchForActions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/SearchForStates.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/SearchUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/package-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/ActionsFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/BidirectionalProblem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/GeneralProblem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/GoalTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/OnlineSearchProblem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/Problem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/ResultFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/problem/StepCostFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/qsearch/BidirectionalSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/qsearch/GraphSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/qsearch/GraphSearchBFS.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/qsearch/GraphSearchReducedFrontier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/qsearch/QueueSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/qsearch/TreeSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/framework/qsearch/package-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/informed/AStarSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/informed/BestFirstSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/informed/HeuristicEvaluationFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/informed/Informed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/uninformed/BreadthFirstSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/uninformed/DepthFirstSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/uninformed/DepthLimitedSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/uninformed/IterativeDeepeningSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/search/uninformed/UniformCostSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/ArrayIterator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/CancellableThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/DisjointSets.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/FrequencyCounter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/JavaRandomizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/MockRandomizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/PowersOf2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/Randomizer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/SetOps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/Tasks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/datastructure/LabeledGraph.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/datastructure/Pair.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/datastructure/Table.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/datastructure/Triplet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/datastructure/TwoKeyHashMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/datastructure/XYLocation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/Interval.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/LUDecomposition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/Matrix.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/MixedRadixNumber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/Vector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/CartesianPlot2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/IGroupParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/SVGGroupParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/package-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Circle2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Ellipse2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/IGeometric2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Line2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Point2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Polyline2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Ray2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Rect2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/TransformMatrix2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/geom/shapes/Vector2D.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/permute/CombinationGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/permute/PermutationGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/math/permute/PowerSetGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/LabyrinthRobot.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/IART1819_T5/LabyrinthRobot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/Level.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/IART1819_T5/Level.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LabyrinthRobot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LabyrinthRobot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Level.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/Data.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/LabyrinthRobot.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/Level.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LabyrinthRobot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/Level.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,51 +179,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/LabyrinthRobot.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Data.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="51" column="107" lean-forward="true" selection-start-line="51" selection-start-column="107" selection-end-line="51" selection-end-column="107" />
-              <folding>
-                <element signature="e#879#880#0" expanded="true" />
-                <element signature="e#962#963#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Level.java">
+        <entry file="file://$PROJECT_DIR$/src/core/LabyrinthRobot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="166" column="8" lean-forward="true" selection-start-line="166" selection-start-column="8" selection-end-line="166" selection-end-column="8" />
+            <state relative-caret-position="204">
+              <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/search/informed/AStarSearch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3658#3659#0" expanded="true" />
-                <element signature="e#3687#3688#0" expanded="true" />
-                <element signature="e#3717#3718#0" expanded="true" />
-                <element signature="e#3753#3754#0" expanded="true" />
-                <element signature="e#3903#3904#0" expanded="true" />
-                <element signature="e#3932#3933#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/maps/level.txt">
+        <entry file="file://$PROJECT_DIR$/src/core/Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="3" lean-forward="true" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
+            <state relative-caret-position="510">
+              <caret line="46" column="103" selection-start-line="46" selection-start-column="103" selection-end-line="46" selection-end-column="103" />
+              <folding>
+                <element signature="e#864#865#0" expanded="true" />
+                <element signature="e#973#974#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/core/Level.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3388#3389#0" expanded="true" />
+                <element signature="e#3540#3541#0" expanded="true" />
+                <element signature="e#3711#3712#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,6 +241,7 @@
     <findStrings>
       <find>robots</find>
       <find>get</find>
+      <find>RecursiveBestFirstSearch</find>
     </findStrings>
     <replaceStrings>
       <replace>agents</replace>
@@ -91,10 +254,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Map.java" />
-        <option value="$PROJECT_DIR$/maps/level.txt" />
-        <option value="$PROJECT_DIR$/src/Data.java" />
         <option value="$PROJECT_DIR$/src/LabyrinthRobot.java" />
         <option value="$PROJECT_DIR$/src/Level.java" />
+        <option value="$PROJECT_DIR$/maps/level.txt" />
+        <option value="$PROJECT_DIR$/src/Data.java" />
+        <option value="$PROJECT_DIR$/src/core/Level.java" />
+        <option value="$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java" />
+        <option value="$PROJECT_DIR$/src/search/informed/BestFirstSearch.java" />
+        <option value="$PROJECT_DIR$/src/search/informed/AStarSearch.java" />
+        <option value="$PROJECT_DIR$/src/search/uninformed/DepthLimitedSearch.java" />
+        <option value="$PROJECT_DIR$/src/core/Data.java" />
+        <option value="$PROJECT_DIR$/src/core/LabyrinthRobot.java" />
       </list>
     </option>
   </component>
@@ -112,7 +282,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -131,10 +300,30 @@
               <item name="IART1819_T5" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="IART1819_T5" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IART1819_T5" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IART1819_T5" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IART1819_T5" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="search" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IART1819_T5" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IART1819_T5" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="search" type="462c0819:PsiDirectoryNode" />
+              <item name="informed" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -144,10 +333,13 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553289725648" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553357985560" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -163,7 +355,7 @@
   </component>
   <component name="RunManager">
     <configuration name="LabyrinthRobot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LabyrinthRobot" />
+      <option name="MAIN_CLASS_NAME" value="core.LabyrinthRobot" />
       <module name="IART1819_T5" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -188,18 +380,19 @@
       <workItem from="1553085485129" duration="119000" />
       <workItem from="1553125283451" duration="4930000" />
       <workItem from="1553190835980" duration="9740000" />
-      <workItem from="1553279923059" duration="2480000" />
+      <workItem from="1553279923059" duration="2685000" />
+      <workItem from="1553335592218" duration="11490000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17269000" />
+    <option name="totallyTimeSpent" value="28964000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4978903" visible="true" weight="0.3161074" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4978903" visible="true" weight="0.22334754" />
       <window_info id="Structure" order="1" sideWeight="0.5021097" side_tool="true" weight="0.24832214" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -207,18 +400,18 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3282123" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3290461" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.3279743" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39871383" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3290461" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3286119" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32960895" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3290461" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50053304" side_tool="true" visible="true" weight="0.3279743" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3279743" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3290461" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -236,51 +429,228 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/maps/level.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="3" lean-forward="true" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
+        <state relative-caret-position="34">
+          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Data.java">
+    <entry file="file://$PROJECT_DIR$/src/search/framework/Metrics.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="51" column="107" lean-forward="true" selection-start-line="51" selection-start-column="107" selection-end-line="51" selection-end-column="107" />
-          <folding>
-            <element signature="e#879#880#0" expanded="true" />
-            <element signature="e#962#963#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/LabyrinthRobot.java">
+    <entry file="file://$PROJECT_DIR$/src/search/informed/BestFirstSearch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Level.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="166" column="8" lean-forward="true" selection-start-line="166" selection-start-column="8" selection-end-line="166" selection-end-column="8" />
+        <state relative-caret-position="323">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3658#3659#0" expanded="true" />
-            <element signature="e#3687#3688#0" expanded="true" />
-            <element signature="e#3717#3718#0" expanded="true" />
-            <element signature="e#3753#3754#0" expanded="true" />
-            <element signature="e#3903#3904#0" expanded="true" />
-            <element signature="e#3932#3933#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/informed/HeuristicEvaluationFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/informed/RecursiveBestFirstSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3128">
+          <caret line="48" column="79" selection-start-line="48" selection-start-column="79" selection-end-line="48" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/informed/Informed.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/uninformed/BreadthFirstSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/uninformed/DepthFirstSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/uninformed/DepthLimitedSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/uninformed/IterativeDeepeningSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/uninformed/UniformCostSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="46" column="13" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/Level.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3388#3389#0" expanded="true" />
+            <element signature="e#3540#3541#0" expanded="true" />
+            <element signature="e#3711#3712#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/Tasks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="46" column="103" selection-start-line="46" selection-start-column="103" selection-end-line="46" selection-end-column="103" />
+          <folding>
+            <element signature="e#864#865#0" expanded="true" />
+            <element signature="e#973#974#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/informed/AStarSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/LabyrinthRobot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
         </state>
       </provider>
     </entry>
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>IART1819_T5</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
