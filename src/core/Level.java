@@ -2,9 +2,7 @@ package core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,12 +11,12 @@ public class Level {
     /**
      * Bi-dimensional representation of map
      */
-    private char[][] matrix = new char[18][18];
+    private static char[][] matrix = new char[18][18];
 
     /**
      * core.Data structure containing agents information
      */
-    private Map<Character, Data> agents = new HashMap<>();
+    private static Map<Character, Data> agents = new HashMap<>();
 
     /**
      * Initializes level class
@@ -161,21 +159,44 @@ public class Level {
     }
 
     /**
+     *
+     * @param curr_agents
+     * @return
+     */
+    static List<ArrayList<String>> get_actions(Map<Character, Data> curr_agents) {
+        List<ArrayList<String>> actions = new ArrayList<>();
+
+        for (Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
+            ArrayList<String> agent_actions = agent.getValue().get_actions(agent.getKey(), matrix, curr_agents);
+
+            for (String action : agent_actions) {
+                ArrayList<String> tmp_list = new ArrayList<>();
+                tmp_list.add(String.valueOf(agent.getKey())); tmp_list.add(action);
+                actions.add(tmp_list);
+            }
+        }
+
+        return actions;
+    }
+
+    static Map<Character, Data> get_result(Map<Character, Data> curr_agents, ArrayList<String> action) {
+        Map<Character, Data> next_agents = curr_agents;
+
+        next_agents.get(action.get(0).charAt(0)).action(action.get(1), matrix, curr_agents);
+
+        return next_agents;
+    }
+
+    /**
      * Checks whether level is completed or not
      * @return True if level is complete. False otherwise
      */
-    boolean complete() {
-        for (Map.Entry<Character, Data> agent : agents.entrySet()) {
+    static boolean test_goal(Map<Character, Data> curr_agents) {
+        for (Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
             if(!agent.getValue().cmp())
                 return false;
         }
         return true;
     }
 
-    void possible_moves() {
-
-        for (Map.Entry<Character, Data> agent : agents.entrySet()) {
-
-        }
-    }
 }
