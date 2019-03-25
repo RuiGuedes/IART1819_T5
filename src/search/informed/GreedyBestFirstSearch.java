@@ -34,7 +34,6 @@ public class GreedyBestFirstSearch<S, A> extends BestFirstSearch<S, A> {
 		super(impl, new EvalFunction<>(h));
 	}
 
-
 	public static class EvalFunction<S, A> extends HeuristicEvaluationFunction<S, A> {
 		public EvalFunction(ToDoubleFunction<Node<S, A>> h) {
 			this.h = h;

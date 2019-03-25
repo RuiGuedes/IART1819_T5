@@ -1,12 +1,15 @@
 package core;
 
+import agent.Action;
+import agent.impl.DynamicAction;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Level {
+class Level {
 
     /**
      * Bi-dimensional representation of map
@@ -142,7 +145,7 @@ public class Level {
      * Get all agents
      * @return core.Data structure containing all agents
      */
-    public Map<Character, Data> getAgents() {
+    Map<Character, Data> getAgents() {
         return agents;
     }
 
@@ -159,30 +162,40 @@ public class Level {
     }
 
     /**
-     *
-     * @param curr_agents
-     * @return
+     * Get possible actions for a certain agent
+     * @param curr_agents All agents in a certain map
+     * @return List of possible actions
      */
-    static List<ArrayList<String>> get_actions(Map<Character, Data> curr_agents) {
-        List<ArrayList<String>> actions = new ArrayList<>();
+    static List<Action> get_actions(Map<Character, Data> curr_agents) {
+        List<Action> actions = new ArrayList<>();
 
         for (Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
-            ArrayList<String> agent_actions = agent.getValue().get_actions(agent.getKey(), matrix, curr_agents);
+            ArrayList<String> agent_actions = agent.getValue().get_actions(matrix, curr_agents);
 
             for (String action : agent_actions) {
-                ArrayList<String> tmp_list = new ArrayList<>();
-                tmp_list.add(String.valueOf(agent.getKey())); tmp_list.add(action);
-                actions.add(tmp_list);
+                String name = agent.getKey() + "-" + action;
+                actions.add(new DynamicAction(name));
             }
         }
 
         return actions;
     }
 
-    static Map<Character, Data> get_result(Map<Character, Data> curr_agents, ArrayList<String> action) {
-        Map<Character, Data> next_agents = curr_agents;
+    /**
+     * Get the result for a certain action
+     * @param curr_agents All agents in a certain map
+     * @param action Action to be performed
+     * @return The new state reached
+     */
+    static Map<Character, Data> get_result(Map<Character, Data> curr_agents, Action action) {
+        Map<Character, Data> next_agents = new HashMap<>();
 
-        next_agents.get(action.get(0).charAt(0)).action(action.get(1), matrix, curr_agents);
+        for (Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
+            next_agents.put(agent.getKey(), new Data(agent.getValue()));
+        }
+
+        String[] action_info = ((DynamicAction) action).getName().split("-");
+        next_agents.get(action_info[0].charAt(0)).action(action_info[1], matrix, curr_agents);
 
         return next_agents;
     }
