@@ -14,10 +14,7 @@ import search.uninformed.BreadthFirstSearch;
 import search.uninformed.DepthFirstSearch;
 import search.uninformed.DepthLimitedSearch;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.ToDoubleFunction;
 
 public class LabyrinthRobot {
@@ -37,6 +34,18 @@ public class LabyrinthRobot {
         //informed();
     }
 
+    /**
+     * Read filename
+     * @return Name of the file to be read
+     */
+    private String read_input() {
+        Scanner reader = new Scanner(System.in);
+        System.out.print("Enter level file name: ");
+        String filename = reader.nextLine();
+        reader.close();
+
+        return filename;
+    }
 
     private static void informed() throws Exception {
 

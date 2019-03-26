@@ -6,28 +6,43 @@ import java.util.Map;
 public class State {
 
     /**
-     * Data structure containing agents information
+     * Data structure containing all agents information
      */
     private Map<Character, Data> agents = new HashMap<>();
 
+    /**
+     * Path cost so far
+     */
     private int pathCost = 0;
 
-    State() {
+    /**
+     * Default constructor
+     */
+    State() {}
 
-    }
-
+    /**
+     * Creates a new state by copying a state. Increments path cost since the new state is a new node
+     * @param state State to be copied
+     */
     State(State state) {
         for (Map.Entry<Character, Data> agent : state.getAgents().entrySet()) {
             agents.put(agent.getKey(), new Data(agent.getValue()));
         }
         this.pathCost = state.getPathCost() + 1;
-        System.out.println(state.getPathCost() + " --- " + pathCost);
     }
 
+    /**
+     * Get path cost so far
+     * @return Path cost
+     */
     int getPathCost() {
         return pathCost;
     }
 
+    /**
+     * Get data structure containing all agents
+     * @return Agents data structure
+     */
     Map<Character, Data> getAgents() {
         return agents;
     }

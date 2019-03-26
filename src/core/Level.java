@@ -24,20 +24,9 @@ class Level {
     private State currState;
 
     /**
-     * Holds all information about the visited nodes so far
+     * Holds all information about the visited nodes at a certain moment
      */
     private static Map<String, Integer> searchInfo = new HashMap<>();
-
-    /**
-     * Initializes level class
-     */
-    Level() {
-        try {
-            read_file(read_input());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Initializes level class
@@ -50,20 +39,6 @@ class Level {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Read filename
-     * @return Name of the file to be read
-     */
-    private String read_input() {
-        Scanner reader = new Scanner(System.in);
-        System.out.print("Enter level file name: ");
-        String filename = reader.nextLine();
-        reader.close();
-
-        return filename;
-    }
-
 
     /**
      * Reads map from a file and initializes matrix
@@ -160,6 +135,14 @@ class Level {
     }
 
     /**
+     * Returns data structure that contains information about the search made
+     * @return Search structure
+     */
+    public static Map<String, Integer> getSearchInfo() {
+        return searchInfo;
+    }
+
+    /**
      * Display matrix in a friendly way
      */
     void display() {
@@ -188,7 +171,6 @@ class Level {
                 State nextState = get_result(currState, new DynamicAction(name));
 
                 if(searchInfo.containsKey(nextState.toString())) {
-                    System.out.println(currState.getPathCost() + " ||| " + nextState.getPathCost());
                     if(searchInfo.get(nextState.toString()) > nextState.getPathCost()) {
                         searchInfo.put(nextState.toString(), nextState.getPathCost());
                         actions.add(new DynamicAction(name));
@@ -198,15 +180,9 @@ class Level {
                     searchInfo.put(nextState.toString(), nextState.getPathCost());
                     actions.add(new DynamicAction(name));
                 }
-
             }
         }
-
         return actions;
-    }
-
-    public static Map<String, Integer> getSearchInfo() {
-        return searchInfo;
     }
 
     /**
