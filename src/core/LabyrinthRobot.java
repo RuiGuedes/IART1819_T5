@@ -27,7 +27,7 @@ public class LabyrinthRobot {
     public static void main(String[] args) throws Exception {
 
 
-        map = new Level("maps/hard.txt");
+        map = new Level("maps/level22.txt");
 
         //map.display();
         //map.getAgents().get('R').display();
@@ -58,7 +58,7 @@ public class LabyrinthRobot {
                 Level::get_result,
                 Level::test_goal);
         //SearchForActions<Map<Character, Data>, ArrayList<String>> search = new DepthFirstSearch<>(new GraphSearch<>());
-        SearchForActions<Map<Character, Data>, Action> search = new DepthLimitedSearch<>(10);
+        SearchForActions<Map<Character, Data>, Action> search = new DepthLimitedSearch<>(60);
         //SearchForActions<Map<Character, Data>, Action> search = new BreadthFirstSearch<>(new TreeSearch<>());
         Optional<List<Action>> actions = search.findActions(problem);
 
