@@ -27,25 +27,27 @@ public class LabyrinthRobot {
     public static void main(String[] args) throws Exception {
 
 
-        map = new Level("maps/level22.txt");
+        map = new Level("maps/level.txt");
 
+        //map.getAgents().get('R').display();
+        //map.getCurrState().getAgents().get('R').display();
         //map.display();
         //map.getAgents().get('R').display();
-        //uninformed();
-        informed();
+        uninformed();
+        //informed();
     }
 
 
     private static void informed() throws Exception {
 
-        Problem<Map<Character, Data>, Action> problem = new GeneralProblem<>(map.getAgents(),
+        Problem<State, Action> problem = new GeneralProblem<>(map.getCurrState(),
                 Level::get_actions,
                 Level::get_result,
                 Level::test_goal);
 
-        //SearchForActions<Map<Character, Data>, Action> search = new GreedyBestFirstSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
-        SearchForActions<Map<Character, Data>, Action> search = new AStarSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
-        SearchAgent<Map<Character, Data>, Action> agent = new SearchAgent<>(problem, search);
+        //SearchForActions<State, Action> search = new GreedyBestFirstSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
+        SearchForActions<State, Action> search = new AStarSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
+        SearchAgent<State, Action> agent = new SearchAgent<>(problem, search);
 
         System.out.println(agent.getActions().size());
         System.out.println(agent.getActions());
@@ -53,17 +55,18 @@ public class LabyrinthRobot {
     }
 
     public static void uninformed() {
-        Problem<Map<Character, Data>, Action> problem = new GeneralProblem<>(map.getAgents(),
+        Problem<State, Action> problem = new GeneralProblem<>(map.getCurrState(),
                 Level::get_actions,
                 Level::get_result,
                 Level::test_goal);
-        //SearchForActions<Map<Character, Data>, ArrayList<String>> search = new DepthFirstSearch<>(new GraphSearch<>());
-        SearchForActions<Map<Character, Data>, Action> search = new DepthLimitedSearch<>(60);
-        //SearchForActions<Map<Character, Data>, Action> search = new BreadthFirstSearch<>(new TreeSearch<>());
+        //SearchForActions<State, Action> search = new DepthFirstSearch<>(new GraphSearch<>());
+        SearchForActions<State, Action> search = new DepthLimitedSearch<>(10);
+        //SearchForActions<State, Action> search = new BreadthFirstSearch<>(new TreeSearch<>());
         Optional<List<Action>> actions = search.findActions(problem);
 
         System.out.println(actions.get());
-        System.out.println(search.getMetrics());
+
+        //System.out.println(search.getMetrics());
     }
 
 }

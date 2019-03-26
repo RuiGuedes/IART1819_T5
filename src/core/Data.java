@@ -58,7 +58,7 @@ public class Data {
      * Get current X position
      * @return Current X position
      */
-    private int getCurrX() {
+    int getCurrX() {
         return currX;
     }
 
@@ -66,7 +66,7 @@ public class Data {
      * Get current Y position
      * @return Current Y position
      */
-    private int getCurrY() {
+    int getCurrY() {
         return currY;
     }
 
@@ -166,28 +166,28 @@ public class Data {
     private List<ArrayList<Integer>> getDirections(int x, int y) {
         List<ArrayList<Integer>> directions = new ArrayList<>();
 
-        if((y < 17) && matrix[y + 1][x] == ' ') {
+        if((y < 17) && matrix[y + 1][x] == ' ' && !reservedPosition(x, y + 1)) {
             directions.add(new ArrayList<>() {{
                 add(0);
                 add(1);
             }});
         }
 
-        if((y > 0) && matrix[y - 1][x] == ' ') {
+        if((y > 0) && matrix[y - 1][x] == ' ' && !reservedPosition(x, y - 1)) {
             directions.add(new ArrayList<>() {{
                 add(0);
                 add(-1);
             }});
         }
 
-        if((x < 17) && matrix[y][x + 1] == ' ') {
+        if((x < 17) && matrix[y][x + 1] == ' ' && !reservedPosition(x + 1, y)) {
             directions.add(new ArrayList<>() {{
                 add(1);
                 add(0);
             }});
         }
 
-        if((x > 0) && matrix[y][x - 1] == ' ') {
+        if((x > 0) && matrix[y][x - 1] == ' ' && !reservedPosition(x- 1, y)) {
             directions.add(new ArrayList<>() {{
                 add(-1);
                 add(0);
@@ -198,7 +198,7 @@ public class Data {
     }
 
     private void fillDirection(int x, int y, int incX, int incY, char number) {
-        while(matrix[y + incY][x + incX] == ' ') {
+        while(matrix[y + incY][x + incX] == ' ' && !reservedPosition(x + incX, y + incY)) {
             matrix[y + incY][x + incX] = number;
             y += incY;
             x += incX;
@@ -206,13 +206,20 @@ public class Data {
     }
 
     private boolean isEmpty() {
-        for (char[] row : matrix) {
-            for (char column : row) {
-                if(column == ' ')
+        for(int row = 0; row < matrix.length; row++) {
+            for(int column = 0; column < matrix[row].length; column++) {
+                if(!reservedPosition(column, row) && matrix[row][column] == ' ')
                     return true;
             }
         }
-        return false;
+        return  false;
+    }
+
+    private boolean reservedPosition(int x, int y) {
+        if((currX == x && currY == y) || (targetX == x && targetY == y))
+            return true;
+        else
+            return false;
     }
 
     double getNeededMoves() {

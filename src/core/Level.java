@@ -19,9 +19,14 @@ class Level {
     private static char[][] matrix = new char[18][18];
 
     /**
-     * core.Data structure containing agents information
+     * Current game state
      */
-    private static Map<Character, Data> agents = new HashMap<>();
+    private State currState;
+
+    /**
+     * Holds all information about the visited nodes so far
+     */
+    private static Map<String, Integer> searchInfo = new HashMap<>();
 
     /**
      * Initializes level class
@@ -68,6 +73,7 @@ class Level {
     private void read_file(String filename) throws FileNotFoundException {
 
         int index = 0;
+        this.currState = new State();
         File fileLevel = new File(filename);
         Scanner sc =  new Scanner(fileLevel);
         Pattern pattern = Pattern.compile("[^X\\s]");
@@ -113,23 +119,26 @@ class Level {
         matrix[y][x] = ' ';
         char key = (int)color < 96 ? color : (char)(color - 32);
 
-        if(agents.containsKey(key)) {
-            Data agent = agents.get(key);
+        if(currState.getAgents().containsKey(key)) {
+            Data agent = currState.getAgents().get(key);
             if((int)color > 96) {
                 agent.setTargetY(y); agent.setTargetX(x);
             }
             else {
                 agent.setCurrY(y); agent.setCurrX(x);
             }
-            agents.put(key, agent);
+            currState.getAgents().put(key, agent);
         } else {
             Data agent = (int)color > 96 ?  new Data(-1,-1, x, y) : new Data(x, y, -1, -1);
-            agents.put(key, agent);
+            currState.getAgents().put(key, agent);
         }
     }
 
+    /**
+     * For each agent pre-process its own matrix to be used by the heuristic function
+     */
     private void initPreProcess() {
-        for (Map.Entry<Character, Data> agent : agents.entrySet()) {
+        for (Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
             agent.getValue().setMatrix(matrix);
         }
     }
@@ -143,20 +152,11 @@ class Level {
     }
 
     /**
-     * Get agent
-     * @param r Agent identifier
-     * @return Agent
+     * Return the game current state
+     * @return Current state
      */
-    Data getAgent(char r) {
-        return agents.get(r);
-    }
-
-    /**
-     * Get all agents
-     * @return core.Data structure containing all agents
-     */
-    Map<Character, Data> getAgents() {
-        return agents;
+    State getCurrState() {
+        return currState;
     }
 
     /**
@@ -173,60 +173,74 @@ class Level {
 
     /**
      * Get possible actions for a certain agent
-     * @param curr_agents All agents in a certain map
+     * @param currState All agents in a certain map
      * @return List of possible actions
      */
-    static List<Action> get_actions(Map<Character, Data> curr_agents) {
+    static List<Action> get_actions(State currState) {
         List<Action> actions = new ArrayList<>();
 
-        for (Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
-            ArrayList<String> agent_actions = agent.getValue().get_actions(matrix, curr_agents);
+        for (Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
+            ArrayList<String> agent_actions = agent.getValue().get_actions(matrix, currState.getAgents());
 
             for (String action : agent_actions) {
                 String name = agent.getKey() + "-" + action;
-                actions.add(new DynamicAction(name));
+
+                State nextState = get_result(currState, new DynamicAction(name));
+
+                if(searchInfo.containsKey(nextState.toString())) {
+                    System.out.println(currState.getPathCost() + " ||| " + nextState.getPathCost());
+                    if(searchInfo.get(nextState.toString()) > nextState.getPathCost()) {
+                        searchInfo.put(nextState.toString(), nextState.getPathCost());
+                        actions.add(new DynamicAction(name));
+                    }
+                }
+                else {
+                    searchInfo.put(nextState.toString(), nextState.getPathCost());
+                    actions.add(new DynamicAction(name));
+                }
+
             }
         }
 
         return actions;
     }
 
+    public static Map<String, Integer> getSearchInfo() {
+        return searchInfo;
+    }
+
     /**
      * Get the result for a certain action
-     * @param curr_agents All agents in a certain map
+     * @param currState All agents in a certain map
      * @param action Action to be performed
      * @return The new state reached
      */
-    static Map<Character, Data> get_result(Map<Character, Data> curr_agents, Action action) {
-        Map<Character, Data> next_agents = new HashMap<>();
-
-        for (Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
-            next_agents.put(agent.getKey(), new Data(agent.getValue()));
-        }
+    static State get_result(State currState, Action action) {
+        State nextState = new State(currState);
 
         String[] action_info = ((DynamicAction) action).getName().split("-");
-        next_agents.get(action_info[0].charAt(0)).action(action_info[1], matrix, curr_agents);
+        nextState.getAgents().get(action_info[0].charAt(0)).action(action_info[1], matrix, currState.getAgents());
 
-        /*for (Map.Entry<Character, Data> agent : next_agents.entrySet()) {
-            agent.getValue().setMatrix(matrix);
-        }*/
-
-        return next_agents;
+        return nextState;
     }
 
     /**
      * Checks whether level is completed or not
      * @return True if level is complete. False otherwise
      */
-    static boolean test_goal(Map<Character, Data> curr_agents) {
-        for (Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
+    static boolean test_goal(State currState) {
+        for (Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
             if(!agent.getValue().cmp())
                 return false;
         }
         return true;
     }
 
-    static ToDoubleFunction<Node<Map<Character, Data>, Action>> createHeuristicFunction() {
+    /**
+     * Creates heuristic function
+     * @return New heuristic function
+     */
+    static ToDoubleFunction<Node<State, Action>> createHeuristicFunction() {
         return new HeuristicFunction();
     }
 
@@ -235,13 +249,13 @@ class Level {
      * @author Ruediger Lunde
      *
      */
-    private static class HeuristicFunction implements ToDoubleFunction<Node<Map<Character, Data>, Action>> {
+    private static class HeuristicFunction implements ToDoubleFunction<Node<State, Action>> {
 
         @Override
-        public double applyAsDouble(Node<Map<Character, Data>, Action> node) {
+        public double applyAsDouble(Node<State, Action> node) {
             double result = 0;
 
-            for (Map.Entry<Character, Data> agent : node.getState().entrySet()) {
+            for (Map.Entry<Character, Data> agent : node.getState().getAgents().entrySet()) {
                 result += agent.getValue().getNeededMoves();
             }
 
