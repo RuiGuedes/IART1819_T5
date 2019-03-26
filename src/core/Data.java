@@ -1,6 +1,8 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class Data {
@@ -25,6 +27,10 @@ public class Data {
      */
     private int targetY;
 
+    /**
+     * Bi-dimensional representation of map
+     */
+    private char[][] matrix = new char[18][18];
 
     /**
      * Default constructor
@@ -45,6 +51,7 @@ public class Data {
     Data(Data object) {
         this.currX = object.currX; this.currY = object.currY;
         this.targetX = object.targetX; this.targetY = object.targetY;
+        this.matrix = object.matrix;
     }
 
     /**
@@ -93,6 +100,126 @@ public class Data {
      */
     void setTargetY(int targetY) {
         this.targetY = targetY;
+    }
+
+    /**
+     * Set agent matrix
+     * @param matrix Matrix without any agent
+     */
+    void setMatrix(char[][] matrix) {
+        this.matrix = deepCopy(matrix);
+        if(targetX != -1 && targetY != -1)
+            preProcessMatrix();
+    }
+
+    /**
+     * Deep copy a bi-dimensional array
+     * @param original Original array
+     * @return Return the original array copy
+     */
+    private static char[][] deepCopy(char[][] original) {
+        if (original == null) {
+            return null;
+        }
+
+        final char[][] result = new char[original.length][];
+        for (int i = 0; i < original.length; i++) {
+            result[i] = Arrays.copyOf(original[i], original[i].length);
+        }
+        return result;
+    }
+
+    public void preProcessMatrix() {
+
+        char distance = '1';
+
+        for(ArrayList<Integer> array : getDirections(targetX, targetY)) {
+            fillDirection(targetX, targetY, array.get(0), array.get(1), '1');
+        }
+
+        while(isEmpty()) {
+
+            for(ArrayList<Integer> cells : getCells(distance++)) {
+                for(ArrayList<Integer> directions : getDirections(cells.get(1), cells.get(0))) {
+                    fillDirection(cells.get(1), cells.get(0), directions.get(0), directions.get(1), distance);
+                }
+            }
+        }
+    }
+
+    private List<ArrayList<Integer>> getCells(char number) {
+        List<ArrayList<Integer>> cells = new ArrayList<>();
+
+        for (int row = 0; row < matrix.length; row++) {
+            for (int column = 0; column < matrix[row].length; column++) {
+                if(matrix[row][column] == number) {
+                    ArrayList<Integer> tmpList = new ArrayList<>();
+                    tmpList.add(row); tmpList.add(column);
+                    cells.add(tmpList);
+                }
+            }
+        }
+
+        return cells;
+    }
+
+    private List<ArrayList<Integer>> getDirections(int x, int y) {
+        List<ArrayList<Integer>> directions = new ArrayList<>();
+
+        if((y < 17) && matrix[y + 1][x] == ' ') {
+            directions.add(new ArrayList<>() {{
+                add(0);
+                add(1);
+            }});
+        }
+
+        if((y > 0) && matrix[y - 1][x] == ' ') {
+            directions.add(new ArrayList<>() {{
+                add(0);
+                add(-1);
+            }});
+        }
+
+        if((x < 17) && matrix[y][x + 1] == ' ') {
+            directions.add(new ArrayList<>() {{
+                add(1);
+                add(0);
+            }});
+        }
+
+        if((x > 0) && matrix[y][x - 1] == ' ') {
+            directions.add(new ArrayList<>() {{
+                add(-1);
+                add(0);
+            }});
+        }
+
+        return directions;
+    }
+
+    private void fillDirection(int x, int y, int incX, int incY, char number) {
+        while(matrix[y + incY][x + incX] == ' ') {
+            matrix[y + incY][x + incX] = number;
+            y += incY;
+            x += incX;
+        }
+    }
+
+    private boolean isEmpty() {
+        for (char[] row : matrix) {
+            for (char column : row) {
+                if(column == ' ')
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    double getNeededMoves() {
+        if(targetX != -1 && targetY != -1)
+            return Character.digit(matrix[currY][currX], 10);
+        else
+            return 0;
     }
 
     /**
@@ -185,6 +312,18 @@ public class Data {
      */
     boolean cmp() {
         return ((this.targetX == -1) || ((this.currX == this.targetX) && (this.currY == this.targetY)));
+    }
+
+    /**
+     * Display matrix in a friendly way
+     */
+    void display() {
+        for (char[] row : matrix) {
+            for (char cell : row) {
+                System.out.print(cell + " ");
+            }
+            System.out.println();
+        }
     }
 
     @Override

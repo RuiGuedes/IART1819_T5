@@ -1,17 +1,17 @@
 XXXXXXXXXXXXXXXXXX
 XXXr   XXXXXXXXXXX
-X      X   R  X XX
-X         X   X XX
-X  XXXX     XXX XX
-X  XX        XX XX
-X XX    XX   XX XX
-X X          XX XX
-X       XX   XX XX
-X X     XX XXXX XX
-X XXXX        X XX
-X X  X  XX    X XX
-X X  X  XX    X XX
-X XXXX  XXXX  X XX
+X      X   R  X0XX
+X         X   X0XX
+X  XXXX     XXX0XX
+X  XX        XX0XX
+X XX    XX   XX0XX
+X X          XX0XX
+X       XX   XX0XX
+X X     XX XXXX0XX
+X XXXX        X0XX
+X X00X  XX    X0XX
+X X00X  XX    X0XX
+X XXXX  XXXX  X0XX
 X  X       X  XXXX
 X    XXX  XX    XX
 XXXXXXXX        XX

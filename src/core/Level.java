@@ -2,10 +2,12 @@ package core;
 
 import agent.Action;
 import agent.impl.DynamicAction;
+import search.framework.Node;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.function.ToDoubleFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -82,6 +84,8 @@ class Level {
 
             index++;
         }
+
+        initPreProcess();
     }
 
     /**
@@ -121,6 +125,12 @@ class Level {
         } else {
             Data agent = (int)color > 96 ?  new Data(-1,-1, x, y) : new Data(x, y, -1, -1);
             agents.put(key, agent);
+        }
+    }
+
+    private void initPreProcess() {
+        for (Map.Entry<Character, Data> agent : agents.entrySet()) {
+            agent.getValue().setMatrix(matrix);
         }
     }
 
@@ -197,6 +207,10 @@ class Level {
         String[] action_info = ((DynamicAction) action).getName().split("-");
         next_agents.get(action_info[0].charAt(0)).action(action_info[1], matrix, curr_agents);
 
+        /*for (Map.Entry<Character, Data> agent : next_agents.entrySet()) {
+            agent.getValue().setMatrix(matrix);
+        }*/
+
         return next_agents;
     }
 
@@ -210,6 +224,29 @@ class Level {
                 return false;
         }
         return true;
+    }
+
+    static ToDoubleFunction<Node<Map<Character, Data>, Action>> createHeuristicFunction() {
+        return new HeuristicFunction();
+    }
+
+    /**
+     * @author Ravi Mohan
+     * @author Ruediger Lunde
+     *
+     */
+    private static class HeuristicFunction implements ToDoubleFunction<Node<Map<Character, Data>, Action>> {
+
+        @Override
+        public double applyAsDouble(Node<Map<Character, Data>, Action> node) {
+            double result = 0;
+
+            for (Map.Entry<Character, Data> agent : node.getState().entrySet()) {
+                result += agent.getValue().getNeededMoves();
+            }
+
+            return result;
+        }
     }
 
 }

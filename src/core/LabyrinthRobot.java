@@ -8,6 +8,7 @@ import search.framework.problem.GeneralProblem;
 import search.framework.problem.Problem;
 import search.framework.qsearch.GraphSearch;
 import search.framework.qsearch.TreeSearch;
+import search.informed.AStarSearch;
 import search.informed.GreedyBestFirstSearch;
 import search.uninformed.BreadthFirstSearch;
 import search.uninformed.DepthFirstSearch;
@@ -23,15 +24,16 @@ public class LabyrinthRobot {
 
     private static Level map;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
 
-        map = new Level("maps/level.txt");
+        map = new Level("maps/hard.txt");
 
-        uninformed();
-        //informed();
+        //map.display();
+        //map.getAgents().get('R').display();
+        //uninformed();
+        informed();
     }
-
 
 
     private static void informed() throws Exception {
@@ -41,14 +43,13 @@ public class LabyrinthRobot {
                 Level::get_result,
                 Level::test_goal);
 
-        //SearchForActions<Map<Character, Data>, Action> search = new GreedyBestFirstSearch<Map<Character, Data>, Object>
-          //      (new GraphSearch<>(), createManhattanHeuristicFunction());
-       // SearchAgent<Map<Character, Data>, Action> agent = new SearchAgent<>(problem, search);
+        //SearchForActions<Map<Character, Data>, Action> search = new GreedyBestFirstSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
+        SearchForActions<Map<Character, Data>, Action> search = new AStarSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
+        SearchAgent<Map<Character, Data>, Action> agent = new SearchAgent<>(problem, search);
 
-    }
+        System.out.println(agent.getActions().size());
+        System.out.println(agent.getActions());
 
-    public static ToDoubleFunction<Node<Map<Character, Data>, ArrayList<String>>> createManhattanHeuristicFunction() {
-        return null;
     }
 
     public static void uninformed() {

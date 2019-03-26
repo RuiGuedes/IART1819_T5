@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee4ce63b-3353-4860-929c-a9b679fff994" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maps/hard.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/core/Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/IART1819_T5/core/Data.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/core/LabyrinthRobot.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/IART1819_T5/core/LabyrinthRobot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/IART1819_T5/core/Level.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/IART1819_T5/core/Level.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maps/level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/maps/level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/Data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/LabyrinthRobot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/LabyrinthRobot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/Level.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/LabyrinthRobot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="64" column="46" selection-start-line="64" selection-start-column="46" selection-end-line="64" selection-end-column="46" />
+            <state relative-caret-position="445">
+              <caret line="64" column="42" lean-forward="true" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,10 +30,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/maps/hard.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/core/Level.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2431">
-              <caret line="149" column="5" lean-forward="true" selection-start-line="149" selection-start-column="5" selection-end-line="149" selection-end-column="5" />
+            <state relative-caret-position="295">
+              <caret line="245" column="72" selection-start-line="245" selection-start-column="72" selection-end-line="245" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/core/Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="170" column="53" lean-forward="true" selection-start-line="170" selection-start-column="26" selection-end-line="170" selection-end-column="53" />
+            <state relative-caret-position="228">
+              <caret line="221" column="21" selection-start-line="221" selection-start-column="21" selection-end-line="221" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1076#1077#0" expanded="true" />
@@ -65,9 +69,17 @@
                 <element signature="e#1453#1454#0" expanded="true" />
                 <element signature="e#1489#1490#0" expanded="true" />
                 <element signature="e#1527#1528#0" expanded="true" />
-                <element signature="e#4698#4699#0" expanded="true" />
-                <element signature="e#4809#4810#0" expanded="true" />
+                <element signature="e#8735#8736#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/maps/level.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -113,7 +125,6 @@
         <option value="$PROJECT_DIR$/src/search/informed/BestFirstSearch.java" />
         <option value="$PROJECT_DIR$/src/search/informed/AStarSearch.java" />
         <option value="$PROJECT_DIR$/src/search/uninformed/DepthLimitedSearch.java" />
-        <option value="$PROJECT_DIR$/maps/level.txt" />
         <option value="$PROJECT_DIR$/maps/hard.txt" />
         <option value="$PROJECT_DIR$/src/agent/Action.java" />
         <option value="$PROJECT_DIR$/src/agent/AgentProgram.java" />
@@ -134,9 +145,10 @@
         <option value="$PROJECT_DIR$/src/agent/DTAgent.java" />
         <option value="$PROJECT_DIR$/src/search/agent/NondeterministicSearchAgent.java" />
         <option value="$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java" />
+        <option value="$PROJECT_DIR$/maps/level.txt" />
         <option value="$PROJECT_DIR$/src/core/Data.java" />
-        <option value="$PROJECT_DIR$/src/core/Level.java" />
         <option value="$PROJECT_DIR$/src/core/LabyrinthRobot.java" />
+        <option value="$PROJECT_DIR$/src/core/Level.java" />
       </list>
     </option>
   </component>
@@ -182,12 +194,6 @@
               <item name="IART1819_T5" type="b2602c69:ProjectViewProjectNode" />
               <item name="IART1819_T5" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="probability" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="IART1819_T5" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IART1819_T5" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="search" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -211,7 +217,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553541430652" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553559860947" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -269,12 +275,12 @@
       <workItem from="1553373950198" duration="6223000" />
       <workItem from="1553426619177" duration="1392000" />
       <workItem from="1553510307793" duration="1954000" />
-      <workItem from="1553524985347" duration="10436000" />
+      <workItem from="1553524985347" duration="19757000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57064000" />
+    <option name="totallyTimeSpent" value="66385000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -494,20 +500,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/maps/level.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="17" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/maps/hard.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.base/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
@@ -682,10 +674,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/maps/hard.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/maps/level.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/core/Data.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="170" column="53" lean-forward="true" selection-start-line="170" selection-start-column="26" selection-end-line="170" selection-end-column="53" />
+        <state relative-caret-position="228">
+          <caret line="221" column="21" selection-start-line="221" selection-start-column="21" selection-end-line="221" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1076#1077#0" expanded="true" />
@@ -700,33 +713,25 @@
             <element signature="e#1453#1454#0" expanded="true" />
             <element signature="e#1489#1490#0" expanded="true" />
             <element signature="e#1527#1528#0" expanded="true" />
-            <element signature="e#4698#4699#0" expanded="true" />
-            <element signature="e#4809#4810#0" expanded="true" />
+            <element signature="e#8735#8736#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/Level.java">
+    <entry file="file://$PROJECT_DIR$/src/core/LabyrinthRobot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2431">
-          <caret line="149" column="5" lean-forward="true" selection-start-line="149" selection-start-column="5" selection-end-line="149" selection-end-column="5" />
+        <state relative-caret-position="445">
+          <caret line="64" column="42" lean-forward="true" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/search/informed/GreedyBestFirstSearch.java">
+    <entry file="file://$PROJECT_DIR$/src/core/Level.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="34" column="5" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/core/LabyrinthRobot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="64" column="46" selection-start-line="64" selection-start-column="46" selection-end-line="64" selection-end-column="46" />
+        <state relative-caret-position="295">
+          <caret line="245" column="72" selection-start-line="245" selection-start-column="72" selection-end-line="245" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
