@@ -26,7 +26,7 @@ class Level {
     /**
      * Holds all information about the visited nodes at a certain moment
      */
-    private static Map<String, Integer> searchInfo = new HashMap<>();
+    private static Map<String, Integer> searchInfo;
 
     /**
      * Initializes level class
@@ -34,7 +34,7 @@ class Level {
      */
     Level(String filename) {
         try {
-            read_file(filename);
+            readFile(filename);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -45,10 +45,10 @@ class Level {
      * @param filename Name of the file to be read
      * @throws FileNotFoundException Possible exception
      */
-    private void read_file(String filename) throws FileNotFoundException {
+    private void readFile(String filename) throws FileNotFoundException {
 
         int index = 0;
-        this.currState = new State();
+        this.currState = new State(); searchInfo = new HashMap<>();
         File fileLevel = new File(filename);
         Scanner sc =  new Scanner(fileLevel);
         Pattern pattern = Pattern.compile("[^X\\s]");
@@ -60,7 +60,7 @@ class Level {
             Matcher matcher = pattern.matcher(line);
 
             if(matcher.find()) {
-                parse_row(line, index);
+                parseRow(line, index);
             }
 
             index++;
@@ -74,11 +74,11 @@ class Level {
      * @param line Matrix row
      * @param index Index of the row
      */
-    private void parse_row(String line, int index) {
+    private void parseRow(String line, int index) {
         for(int i = 65; i < 123; i++) {
             if(!((i > 90 && i < 97) || (i == 88) || (i == 120))) {
                 if(line.indexOf((char)i) != -1) {
-                    store_data((char)i, line.indexOf((char)i), index);
+                    storeData((char)i, line.indexOf((char)i), index);
                 }
             }
         }
@@ -90,7 +90,7 @@ class Level {
      * @param x Row
      * @param y Column
      */
-    private void store_data(char color, int x, int y) {
+    private void storeData(char color, int x, int y) {
         matrix[y][x] = ' ';
         char key = (int)color < 96 ? color : (char)(color - 32);
 
@@ -146,12 +146,45 @@ class Level {
      * Display matrix in a friendly way
      */
     void display() {
-        for (char[] row : matrix) {
-            for (char cell : row) {
-                System.out.print(cell + " ");
+        System.out.println();
+        for(int row = 0; row < matrix.length; row++) {
+            for(int column = 0; column < matrix[row].length; column++) {
+                if(matrix[row][column] == '0')
+                    System.out.print("  ");
+                else {
+                    char agent = agentAt(column, row);
+                    if (agent != ' ')
+                        System.out.print(agent + " ");
+                    else
+                        System.out.print(matrix[row][column] + " ");
+                }
             }
             System.out.println();
         }
+        System.out.println();
+        System.out.println("##########");
+        System.out.println("# Legend #");
+        System.out.println("##########");
+        System.out.println("\nX -> Map Boundary");
+        System.out.println("Uppercase -> Robot Position");
+        System.out.println("Lowercase -> Target Position\n");
+    }
+
+    /**
+     * Checks if there exists an agent at a certain position
+     * @param x X position
+     * @param y Y position
+     * @return Cell identifier
+     */
+    private char agentAt(int x, int y) {
+        for(Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
+            if(agent.getValue().getCurrX() == x && agent.getValue().getCurrY() == y)
+                return agent.getKey();
+            else if(agent.getValue().getTargetX() == x && agent.getValue().getTargetY() == y) {
+                return (char) (agent.getKey() + 32);
+            }
+        }
+        return ' ';
     }
 
     /**
@@ -159,16 +192,16 @@ class Level {
      * @param currState All agents in a certain map
      * @return List of possible actions
      */
-    static List<Action> get_actions(State currState) {
+    static List<Action> getActions(State currState) {
         List<Action> actions = new ArrayList<>();
 
         for (Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
-            ArrayList<String> agent_actions = agent.getValue().get_actions(matrix, currState.getAgents());
+            ArrayList<String> agent_actions = agent.getValue().getActions(matrix, currState.getAgents());
 
             for (String action : agent_actions) {
                 String name = agent.getKey() + "-" + action;
 
-                State nextState = get_result(currState, new DynamicAction(name));
+                State nextState = getResult(currState, new DynamicAction(name));
 
                 if(searchInfo.containsKey(nextState.toString())) {
                     if(searchInfo.get(nextState.toString()) > nextState.getPathCost()) {
@@ -191,7 +224,7 @@ class Level {
      * @param action Action to be performed
      * @return The new state reached
      */
-    static State get_result(State currState, Action action) {
+    static State getResult(State currState, Action action) {
         State nextState = new State(currState);
 
         String[] action_info = ((DynamicAction) action).getName().split("-");
@@ -204,7 +237,7 @@ class Level {
      * Checks whether level is completed or not
      * @return True if level is complete. False otherwise
      */
-    static boolean test_goal(State currState) {
+    static boolean testGoal(State currState) {
         for (Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
             if(!agent.getValue().cmp())
                 return false;
@@ -216,8 +249,12 @@ class Level {
      * Creates heuristic function
      * @return New heuristic function
      */
-    static ToDoubleFunction<Node<State, Action>> createHeuristicFunction() {
-        return new HeuristicFunction();
+    static ToDoubleFunction<Node<State, Action>> createHeuristicFunction(int heuristicFunction) {
+
+        if(heuristicFunction == 1)
+            return new AgentAlignmentHeuristic();
+        else
+            return new FreeMovementHeuristic();
     }
 
     /**
@@ -225,7 +262,7 @@ class Level {
      * @author Ruediger Lunde
      *
      */
-    private static class HeuristicFunction implements ToDoubleFunction<Node<State, Action>> {
+    private static class FreeMovementHeuristic implements ToDoubleFunction<Node<State, Action>> {
 
         @Override
         public double applyAsDouble(Node<State, Action> node) {
@@ -233,6 +270,25 @@ class Level {
 
             for (Map.Entry<Character, Data> agent : node.getState().getAgents().entrySet()) {
                 result += agent.getValue().getNeededMoves();
+            }
+
+            return result;
+        }
+    }
+
+    /**
+     * @author Ravi Mohan
+     * @author Ruediger Lunde
+     *
+     */
+    private static class AgentAlignmentHeuristic implements ToDoubleFunction<Node<State, Action>> {
+
+        @Override
+        public double applyAsDouble(Node<State, Action> node) {
+            double result = 0;
+
+            for (Map.Entry<Character, Data> agent : node.getState().getAgents().entrySet()) {
+                result += agent.getValue().getAlignmentValue();
             }
 
             return result;

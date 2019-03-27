@@ -2,7 +2,7 @@ package core;
 
 import agent.Action;
 import search.agent.SearchAgent;
-import search.framework.Node;
+import search.framework.Metrics;
 import search.framework.SearchForActions;
 import search.framework.problem.GeneralProblem;
 import search.framework.problem.Problem;
@@ -15,37 +15,70 @@ import search.uninformed.DepthFirstSearch;
 import search.uninformed.DepthLimitedSearch;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
-import java.util.function.ToDoubleFunction;
 
 public class LabyrinthRobot {
 
-    private static Level map;
+    /**
+     * Scanner to read user input
+     */
+    private static final Scanner reader = new Scanner(System.in);
 
-    private static int MIN_DEPTH = 10;
+    /**
+     * Min depth for Depth-Limited Search
+     */
+    private static int MIN_DEPTH = 1;
+
+    /**
+     * Max depth for Depth-Limited Search
+     */
     private static int MAX_DEPTH = 1000;
 
     public static void main(String[] args) throws Exception {
 
         // Read filename and initialize map
-        read_file_name();
+        String filename = read_file_name();
 
         // Display interface
-        mainMenu();
+        mainMenu(filename);
     }
 
-    private static void clearScreen(int limit) {
-        for(int i = 0; i < limit; i++)
-            System.out.println();
+    /**
+     * Read filename
+     */
+    private static String read_file_name() throws IOException, InterruptedException {
+        String filename;
+
+        displayTitle();
+        System.out.println("#################");
+        System.out.println("# Reading Level #");
+        System.out.println("#################\n");
+
+        while (true) {
+            System.out.print("Enter level name: ");
+            filename = reader.nextLine();
+
+            File f = new File("maps/" + filename + ".txt");
+            if(f.exists() && !f.isDirectory())
+                break;
+            else
+                System.out.println("Invalid level name. Try again !\n");
+        }
+
+        new Level("maps/" + filename + ".txt").display();
+
+        System.out.println("File has been read successfully.\n");
+        blockUntil();
+
+        return "maps/" + filename + ".txt";
     }
 
-    private static void displayTitle() {
-        System.out.println("######################");
-        System.out.println("## Labyrinth Robots ##");
-        System.out.println("######################\n");
-    }
-
-    private static void mainMenu() throws Exception {
+    /**
+     * Displays main menu
+     * @param filename Level filename
+     */
+    private static void mainMenu(String filename) throws Exception {
 
         ArrayList<String> displayOptions = new ArrayList<>() {
             {
@@ -58,26 +91,36 @@ public class LabyrinthRobot {
             }
         };
 
+        ArrayList<String> possibleHeuristics = new ArrayList<>() {
+            {
+                add("\nHeuristic Functions\n");
+                add("1 - Agent Alignment Heuristic");
+                add("2 - Free Movement Heuristic\n");
+            }
+        };
+
         while(true) {
             displayTitle();
             String option = read_input(displayOptions, "Select an algorithm: ", "Invalid option. Try again !", 1, displayOptions.size());
 
             switch (option) {
                 case "1":
-                    uninformedSearch("Depth-First Search", 0);
+                    uninformedSearch(new Level(filename), "Depth-First Search", 0);
                     break;
                 case "2":
-                    uninformedSearch("Breadth-First Search", 0);
+                    uninformedSearch(new Level(filename), "Breadth-First Search", 0);
                     break;
                 case "3":
-                    String limit = read_input(null, "Select the limit depth [" + MIN_DEPTH + " , " + MAX_DEPTH + "]: ", "Invalid limit. Try again !", MIN_DEPTH, MAX_DEPTH);
-                    uninformedSearch("Depth-First Search", Integer.parseInt(limit));
+                    String limit = read_input(new ArrayList<>(), "\nSelect the limit depth [" + MIN_DEPTH + " , " + MAX_DEPTH + "]: ", "Invalid limit. Try again !", MIN_DEPTH, MAX_DEPTH);
+                    uninformedSearch(new Level(filename), "Depth-Limited Search", Integer.parseInt(limit));
                     break;
                 case "4":
-                    informedSearch("Greedy-Best-First Search");
+                    String greedyHeuristic = read_input(possibleHeuristics, "Select an heuristic: ", "Invalid option. Try again !", 1, possibleHeuristics.size() - 1);
+                    informedSearch(new Level(filename), "Greedy-Best-First Search", Integer.parseInt(greedyHeuristic));
                     break;
                 case "5":
-                    informedSearch("A-StarSearch");
+                    String aStarHeuristic = read_input(possibleHeuristics, "Select an heuristic: ", "Invalid option. Try again !", 1, possibleHeuristics.size() - 1);
+                    informedSearch(new Level(filename), "A-StarSearch", Integer.parseInt(aStarHeuristic));
                     break;
                 case "6":
                     return;
@@ -91,11 +134,11 @@ public class LabyrinthRobot {
      */
     private static String read_input(ArrayList<String> displayOptions, String displayQuestion, String displayInvalid, int lowerLimit, int upperLimit) {
         String option;
-        Scanner reader = new Scanner(System.in);
+
+        for(String displayOption : displayOptions)
+            System.out.println(displayOption);
 
         while (true) {
-            for(String displayOption : displayOptions) System.out.println(displayOption);
-
             System.out.print(displayQuestion);
             option = reader.nextLine();
 
@@ -106,8 +149,7 @@ public class LabyrinthRobot {
                     throw new Exception();
             }
             catch (Exception e) {
-                System.out.println(displayInvalid);
-                clearScreen(1);
+                System.out.println(displayInvalid + "\n");
             }
         }
 
@@ -115,28 +157,13 @@ public class LabyrinthRobot {
     }
 
     /**
-     * Read filename
+     * Performs uninformed search
+     * @param map Level chosen
+     * @param algorithm Algorithm to be used
+     * @param limit Depth limit chosen
      */
-    private static void read_file_name() {
-        String filename;
-        Scanner reader = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter filename: ");
-            filename = reader.nextLine();
-
-            File f = new File("maps/" + filename + ".txt");
-            if(f.exists() && !f.isDirectory())
-                break;
-            else
-                System.out.println("Invalid file. Try again !");
-        }
-
-        map = new Level("maps/" + filename + ".txt");
-    }
-
-    private static void uninformedSearch(String algorithm, int limit) {
-        Problem<State, Action> problem = new GeneralProblem<>(map.getCurrState(), Level::get_actions, Level::get_result,  Level::test_goal);
+    private static void uninformedSearch(Level map, String algorithm, int limit) throws IOException, InterruptedException {
+        Problem<State, Action> problem = new GeneralProblem<>(map.getCurrState(), Level::getActions, Level::getResult,  Level::testGoal);
         SearchForActions<State, Action> search = null;
 
         switch (algorithm) {
@@ -151,29 +178,136 @@ public class LabyrinthRobot {
                 break;
         }
 
+        long start = System.currentTimeMillis();
         Optional<List<Action>> actions = search.findActions(problem);
+        long elapsedTime = System.currentTimeMillis() - start;
 
-        System.out.println(actions.get());
-        System.out.println(search.getMetrics());
+        if(actions.isPresent())
+            displayAlgorithmInformation(actions.get(), search.getMetrics(), null, elapsedTime);
+        else
+            displayAlgorithmInformation(new ArrayList<>(), search.getMetrics(), null, elapsedTime);
     }
 
-    private static void informedSearch(String algorithm) throws Exception {
-        Problem<State, Action> problem = new GeneralProblem<>(map.getCurrState(), Level::get_actions, Level::get_result,  Level::test_goal);
+    /**
+     * Performs informed search
+     * @param map Level chosen
+     * @param algorithm Algorithm to be used
+     */
+    private static void informedSearch(Level map, String algorithm, int heuristic) throws Exception {
+        Problem<State, Action> problem = new GeneralProblem<>(map.getCurrState(), Level::getActions, Level::getResult,  Level::testGoal);
         SearchForActions<State, Action> search = null;
 
         switch (algorithm) {
             case "Greedy-Best-First Search":
-                search = new GreedyBestFirstSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
+                search = new GreedyBestFirstSearch<>(new GraphSearch<>(), Level.createHeuristicFunction(heuristic));
                 break;
             case "A-StarSearch":
-                search = new AStarSearch<>(new GraphSearch<>(), Level.createHeuristicFunction());
+                search = new AStarSearch<>(new GraphSearch<>(), Level.createHeuristicFunction(heuristic));
                 break;
         }
 
+        long start = System.currentTimeMillis();
         SearchAgent<State, Action> agent = new SearchAgent<>(problem, search);
+        long elapsedTime = System.currentTimeMillis() - start;
 
-        System.out.println(agent.getActions().size());
-        System.out.println(agent.getActions());
+        displayAlgorithmInformation(agent.getActions(), null, agent.getInstrumentation(), elapsedTime);
+    }
+
+    /**
+     * Clears screen
+     */
+    private static void clearScreen() throws IOException, InterruptedException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
+
+    /**
+     * Displays game title
+     */
+    private static void displayTitle() throws IOException, InterruptedException {
+        clearScreen();
+        System.out.println("######################");
+        System.out.println("## Labyrinth Robots ##");
+        System.out.println("######################\n");
+    }
+
+    /**
+     * Displays algorithm detailed information
+     * @param actions Actions made
+     * @param metrics Algorithm metrics
+     * @param properties Algorithm metrics
+     * @param elapsedTime Time elapsed
+     */
+    private static void displayAlgorithmInformation(List<Action> actions, Metrics metrics, Properties properties, long elapsedTime) throws IOException, InterruptedException {
+        displayTitle();
+        displaySolution(actions);
+        displayStatistics(metrics, properties, elapsedTime);
+        blockUntil();
+    }
+
+    /**
+     * Displays level solution
+     * @param actions Actions made
+     */
+    private static void displaySolution(List<Action> actions) {
+        System.out.println("##################");
+        System.out.println("# Level solution #");
+        System.out.println("##################\n");
+
+        if(actions.isEmpty())
+            System.out.println("No solution available to be displayed.");
+
+        for(int i = 1; (i - 1) < actions.size(); i++) {
+            System.out.println(i + " - " + actions.get(i - 1).toString());
+        }
+    }
+
+    /**
+     * Displays algorithm metrics
+     * @param metrics Algorithm metrics
+     * @param properties Algorithm metrics
+     * @param elapsedTime Time elapsed
+     */
+    private static void displayStatistics(Metrics metrics, Properties properties, long elapsedTime) {
+
+        ArrayList<String> stats = new ArrayList<>();
+        ArrayList<String> info = new ArrayList<>() {
+            {
+                add("maxQueueSize");
+                add("nodesExpanded");
+                add("pathCost");
+                add("queueSize");
+            }
+        };
+
+        for (String name : info) {
+            if (metrics != null)
+                stats.add(metrics.get(name));
+            else
+                stats.add(properties.get(name).toString());
+        }
+
+        System.out.println("\n##############");
+        System.out.println("# Statistics #");
+        System.out.println("##############\n");
+        System.out.println("Maximum Queue Size = " + stats.get(0));
+        System.out.println("Nodes Expanded = " + stats.get(1));
+        System.out.println("Path Cost = " + stats.get(2));
+        System.out.println("Queue Size = " + stats.get(3));
+        System.out.println("Time Spent = " + elapsedTime + " ms\n");
+    }
+
+    /**
+     * Blocks until user press any key to continue
+     */
+    private static void blockUntil() {
+        System.out.print("Press any key to continue ... ");
+        while (true) {
+            if(reader.hasNextLine()) {
+                reader.nextLine();
+                break;
+            }
+
+        }
     }
 
 }

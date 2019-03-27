@@ -38,4 +38,10 @@ public class DynamicAction extends ObjectWithDynamicAttributes implements
 	public String describeType() {
 		return Action.class.getSimpleName();
 	}
+
+	@Override
+	public String toString() {
+		String[] action = getName().split("-");
+		return "Move agent " + action[0] + " -> " + action[1];
+	}
 }

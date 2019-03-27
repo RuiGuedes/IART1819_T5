@@ -1,0 +1,2 @@
+cd "C:\Users\Rui\Faculdade\3º Ano\2º Semestre\Inteligência Artificial\Trabalho\IART1819_T5"
+"C:\Program Files\Java\jdk-11.0.1\bin\java.exe" --class-path="C:\Users\Rui\Faculdade\3º Ano\2º Semestre\Inteligência Artificial\Trabalho\IART1819_T5\out\production\IART1819_T5" core.LabyrinthRobot

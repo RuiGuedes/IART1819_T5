@@ -1,9 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Data {
 
@@ -68,6 +65,22 @@ public class Data {
      */
     int getCurrY() {
         return currY;
+    }
+
+    /**
+     * Get target X position
+     * @return Target X position
+     */
+    int getTargetX() {
+        return targetX;
+    }
+
+    /**
+     * Get target Y position
+     * @return Target Y position
+     */
+    int getTargetY() {
+        return targetY;
     }
 
     /**
@@ -261,29 +274,45 @@ public class Data {
     }
 
     /**
+     * Get alignment value according to robot position
+     * @return Alignment value
+     */
+    double getAlignmentValue() {
+        if(currX == targetX && currY == targetY)
+            return 0;
+        else if(currX == targetX || currY == targetY)
+            return 1.0;
+        else
+            return 2.0;
+    }
+
+    /**
      * Retrieve possible actions for a certain agent
      * @param matrix Map external representation
      * @param curr_agents All agents in a certain map
      * @return List of possible moves
      */
-    ArrayList<String> get_actions(char[][] matrix, Map<Character, Data> curr_agents) {
+    ArrayList<String> getActions(char[][] matrix, Map<Character, Data> curr_agents) {
         ArrayList<String> agent_actions = new ArrayList<>();
 
         // Up
-        if((this.currY > 1) && (matrix[this.currY - 1][this.currX] == ' ') && !agent_at(this.currX, this.currY - 1, curr_agents))
+        if((this.currY > 1) && (matrix[this.currY - 1][this.currX] == ' ') && !agentAt(this.currX, this.currY - 1, curr_agents))
             agent_actions.add("UP");
 
         // Right
-        if((this.currX < 17) && (matrix[this.currY][this.currX + 1] == ' ') && !agent_at(this.currX + 1, this.currY, curr_agents))
+        if((this.currX < 17) && (matrix[this.currY][this.currX + 1] == ' ') && !agentAt(this.currX + 1, this.currY, curr_agents))
             agent_actions.add("RIGHT");
 
         // Down
-        if((this.currY < 17) && (matrix[this.currY + 1][this.currX] == ' ') && !agent_at(this.currX, this.currY + 1, curr_agents))
+        if((this.currY < 17) && (matrix[this.currY + 1][this.currX] == ' ') && !agentAt(this.currX, this.currY + 1, curr_agents))
             agent_actions.add("DOWN");
 
         // Left
-        if((this.currX > 1) && (matrix[this.currY][this.currX - 1] == ' ') && !agent_at(this.currX - 1, this.currY, curr_agents))
+        if((this.currX > 1) && (matrix[this.currY][this.currX - 1] == ' ') && !agentAt(this.currX - 1, this.currY, curr_agents))
             agent_actions.add("LEFT");
+
+        // Comment this line to ensure actions order for all algorithms is the same
+        Collections.shuffle(agent_actions);
 
         return agent_actions;
     }
@@ -297,16 +326,16 @@ public class Data {
     public void action(String action, char[][] matrix, Map<Character, Data> curr_agents) {
         switch (action) {
             case "UP":
-                move_agent(0, -1, matrix, curr_agents);
+                moveAgent(0, -1, matrix, curr_agents);
                 break;
             case "RIGHT":
-                move_agent(1, 0, matrix, curr_agents);
+                moveAgent(1, 0, matrix, curr_agents);
                 break;
             case "DOWN":
-                move_agent(0, 1, matrix, curr_agents);
+                moveAgent(0, 1, matrix, curr_agents);
                 break;
             case "LEFT":
-                move_agent(-1, 0, matrix, curr_agents);
+                moveAgent(-1, 0, matrix, curr_agents);
                 break;
         }
     }
@@ -318,9 +347,9 @@ public class Data {
      * @param matrix Map external representation
      * @param curr_agents All agents in a certain map
      */
-    private void move_agent(int inc_x, int inc_y, char[][] matrix, Map<Character, Data> curr_agents) {
+    private void moveAgent(int inc_x, int inc_y, char[][] matrix, Map<Character, Data> curr_agents) {
         for(int i = 0; i < 16; i++) {
-            if(matrix[this.currY + inc_y][this.currX + inc_x] == ' ' && !agent_at(this.currX + inc_x, this.currY + inc_y, curr_agents)) {
+            if(matrix[this.currY + inc_y][this.currX + inc_x] == ' ' && !agentAt(this.currX + inc_x, this.currY + inc_y, curr_agents)) {
                 this.currX += inc_x;
                 this.currY += inc_y;
             }
@@ -336,7 +365,7 @@ public class Data {
      * @param curr_agents All agents in a certain map
      * @return True if agent is present, false otherwise
      */
-    private boolean agent_at(int x, int y, Map<Character, Data> curr_agents) {
+    private boolean agentAt(int x, int y, Map<Character, Data> curr_agents) {
         for(Map.Entry<Character, Data> agent : curr_agents.entrySet()) {
             if(agent.getValue().getCurrX() == x && agent.getValue().getCurrY() == y)
                 return true;
