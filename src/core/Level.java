@@ -263,17 +263,9 @@ class Level {
             return new FreeMovementHeuristic();
     }
 
-    /**
-     * @author Ravi Mohan
-     * @author Ruediger Lunde
-     *
-     */
+    
     private static class FreeMovementHeuristic implements ToDoubleFunction<Node<State, Action>> {
 
-        /**
-         * Get needed moves to reach target position
-         * @return Number of needed moves
-         */
         double getNeededMoves(char key, Data agent) {
             if(agent.getTargetX() != -1 && agent.getTargetY() != -1)
                 return Character.digit(preProcessedMatrix.get(key)[agent.getCurrY()][agent.getCurrX()], 10);
@@ -293,11 +285,6 @@ class Level {
         }
     }
 
-    /**
-     * @author Ravi Mohan
-     * @author Ruediger Lunde
-     *
-     */
     private static class AgentAlignmentHeuristic implements ToDoubleFunction<Node<State, Action>> {
 
         @Override
