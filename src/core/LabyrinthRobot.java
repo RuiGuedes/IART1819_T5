@@ -178,14 +178,18 @@ public class LabyrinthRobot {
                 break;
         }
 
+        long memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         long start = System.currentTimeMillis();
+
         Optional<List<Action>> actions = search.findActions(problem);
+
         long elapsedTime = System.currentTimeMillis() - start;
+        long memoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
         if(actions.isPresent())
-            displayAlgorithmInformation(actions.get(), search.getMetrics(), null, elapsedTime);
+            displayAlgorithmInformation(actions.get(), search.getMetrics(), null, elapsedTime, memoryUsage);
         else
-            displayAlgorithmInformation(new ArrayList<>(), search.getMetrics(), null, elapsedTime);
+            displayAlgorithmInformation(new ArrayList<>(), search.getMetrics(), null, elapsedTime, memoryUsage);
     }
 
     /**
@@ -206,11 +210,15 @@ public class LabyrinthRobot {
                 break;
         }
 
+        long memory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         long start = System.currentTimeMillis();
-        SearchAgent<State, Action> agent = new SearchAgent<>(problem, search);
-        long elapsedTime = System.currentTimeMillis() - start;
 
-        displayAlgorithmInformation(agent.getActions(), null, agent.getInstrumentation(), elapsedTime);
+        SearchAgent<State, Action> agent = new SearchAgent<>(problem, search);
+
+        long elapsedTime = System.currentTimeMillis() - start;
+        long memoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+
+        displayAlgorithmInformation(agent.getActions(), null, agent.getInstrumentation(), elapsedTime, memoryUsage);
     }
 
     /**
@@ -237,10 +245,10 @@ public class LabyrinthRobot {
      * @param properties Algorithm metrics
      * @param elapsedTime Time elapsed
      */
-    private static void displayAlgorithmInformation(List<Action> actions, Metrics metrics, Properties properties, long elapsedTime) throws IOException, InterruptedException {
+    private static void displayAlgorithmInformation(List<Action> actions, Metrics metrics, Properties properties, long elapsedTime, long memoryUsage) throws IOException, InterruptedException {
         displayTitle();
         displaySolution(actions);
-        displayStatistics(metrics, properties, elapsedTime);
+        displayStatistics(metrics, properties, elapsedTime, memoryUsage);
         blockUntil();
     }
 
@@ -267,7 +275,7 @@ public class LabyrinthRobot {
      * @param properties Algorithm metrics
      * @param elapsedTime Time elapsed
      */
-    private static void displayStatistics(Metrics metrics, Properties properties, long elapsedTime) {
+    private static void displayStatistics(Metrics metrics, Properties properties, long elapsedTime, long memoryUsage) {
 
         ArrayList<String> stats = new ArrayList<>();
         ArrayList<String> info = new ArrayList<>() {
@@ -293,7 +301,9 @@ public class LabyrinthRobot {
         System.out.println("Nodes Expanded = " + stats.get(1));
         System.out.println("Path Cost = " + stats.get(2));
         System.out.println("Queue Size = " + stats.get(3));
-        System.out.println("Time Spent = " + elapsedTime + " ms\n");
+        System.out.println("Time Spent = " + elapsedTime + " m");
+        System.out.println("Memory Usage = " + humanReadableByteCount(memoryUsage, true));
+        System.out.println();
     }
 
     /**
@@ -308,6 +318,21 @@ public class LabyrinthRobot {
             }
 
         }
+    }
+
+    /**
+     * Displays memory usage in a friendly way.
+     * @param bytes Amount of bytes
+     * @param si Display mode
+     * @return Bytes formatted
+     * @author aioobe
+     */
+    private static String humanReadableByteCount(long bytes, boolean si) {
+        int unit = si ? 1000 : 1024;
+        if (bytes < unit) return bytes + " B";
+        int exp = (int) (Math.log(bytes) / Math.log(unit));
+        String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
 
 }
