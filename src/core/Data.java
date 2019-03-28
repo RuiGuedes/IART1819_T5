@@ -25,11 +25,6 @@ public class Data {
     private int targetY;
 
     /**
-     * Bi-dimensional representation of map
-     */
-    private char[][] matrix = new char[18][18];
-
-    /**
      * Default constructor
      * @param currX Current X position
      * @param currY Current Y position
@@ -48,7 +43,6 @@ public class Data {
     Data(Data object) {
         this.currX = object.currX; this.currY = object.currY;
         this.targetX = object.targetX; this.targetY = object.targetY;
-        this.matrix = object.matrix;
     }
 
     /**
@@ -116,13 +110,16 @@ public class Data {
     }
 
     /**
-     * Set agent matrix
+     * Get agent pre-processed matrix
      * @param matrix Matrix without any agent
      */
-    void setMatrix(char[][] matrix) {
-        this.matrix = deepCopy(matrix);
+    char[][] getPreProcessedMatrix(char[][] matrix) {
+        char[][] newMatrix = deepCopy(matrix);
+
         if(targetX != -1 && targetY != -1)
-            preProcessMatrix();
+            preProcessMatrix(newMatrix);
+
+        return newMatrix;
     }
 
     /**
@@ -144,18 +141,19 @@ public class Data {
 
     /**
      * Pre-process agent matrix so that it can be used by the heuristic function
+     * @param matrix Matrix to process
      */
-    private void preProcessMatrix() {
+    private void preProcessMatrix(char[][] matrix) {
         char distance = '1';
 
-        for(ArrayList<Integer> array : getDirections(targetX, targetY)) {
-            fillDirection(targetX, targetY, array.get(0), array.get(1), '1');
+        for(ArrayList<Integer> array : getDirections(matrix, targetX, targetY)) {
+            fillDirection(matrix, targetX, targetY, array.get(0), array.get(1), '1');
         }
 
-        while(isEmpty()) {
-            for(ArrayList<Integer> cells : getCells(distance++)) {
-                for(ArrayList<Integer> directions : getDirections(cells.get(1), cells.get(0))) {
-                    fillDirection(cells.get(1), cells.get(0), directions.get(0), directions.get(1), distance);
+        while(isEmpty(matrix)) {
+            for(ArrayList<Integer> cells : getCells(matrix, distance++)) {
+                for(ArrayList<Integer> directions : getDirections(matrix, cells.get(1), cells.get(0))) {
+                    fillDirection(matrix, cells.get(1), cells.get(0), directions.get(0), directions.get(1), distance);
                 }
             }
         }
@@ -163,10 +161,11 @@ public class Data {
 
     /**
      * Get cells that have a certain content
+     * @param matrix Matrix to process
      * @param number Content on cells
      * @return List of cells where content is verified
      */
-    private List<ArrayList<Integer>> getCells(char number) {
+    private List<ArrayList<Integer>> getCells(char[][] matrix, char number) {
         List<ArrayList<Integer>> cells = new ArrayList<>();
 
         for (int row = 0; row < matrix.length; row++) {
@@ -184,11 +183,12 @@ public class Data {
 
     /**
      * Get possible expansion directions
+     * @param matrix Matrix to process
      * @param x X position to begin the expansion
      * @param y Y position to begin the expansion
      * @return List of directions where expansion can be made
      */
-    private List<ArrayList<Integer>> getDirections(int x, int y) {
+    private List<ArrayList<Integer>> getDirections(char[][] matrix, int x, int y) {
         List<ArrayList<Integer>> directions = new ArrayList<>();
 
         if((y < 17) && matrix[y + 1][x] == ' ' && !reservedPosition(x, y + 1)) {
@@ -224,13 +224,14 @@ public class Data {
 
     /**
      * Fills a certain direction with a certain content
+     * @param matrix Matrix to process
      * @param x X position of start position
      * @param y Y position of start position
      * @param incX Increment on X
      * @param incY Increment on Y
      * @param number Content to fill cells
      */
-    private void fillDirection(int x, int y, int incX, int incY, char number) {
+    private void fillDirection(char[][] matrix, int x, int y, int incX, int incY, char number) {
         while(matrix[y + incY][x + incX] == ' ' && !reservedPosition(x + incX, y + incY)) {
             matrix[y + incY][x + incX] = number;
             y += incY;
@@ -240,9 +241,10 @@ public class Data {
 
     /**
      * Checks if there are still missing cells to be filled
+     * @param matrix Matrix to process
      * @return True if there are, false otherwise
      */
-    private boolean isEmpty() {
+    private boolean isEmpty(char[][] matrix) {
         for(int row = 0; row < matrix.length; row++) {
             for(int column = 0; column < matrix[row].length; column++) {
                 if(!reservedPosition(column, row) && matrix[row][column] == ' ')
@@ -259,18 +261,7 @@ public class Data {
      * @return True if it is, false otherwise
      */
     private boolean reservedPosition(int x, int y) {
-        return (currX == x && currY == y) || (targetX == x && targetY == y);
-    }
-
-    /**
-     * Get needed moves to reach target position
-     * @return Number of needed moves
-     */
-    double getNeededMoves() {
-        if(targetX != -1 && targetY != -1)
-            return Character.digit(matrix[currY][currX], 10);
-        else
-            return 0;
+        return (targetX == x && targetY == y);
     }
 
     /**
@@ -379,18 +370,6 @@ public class Data {
      */
     boolean cmp() {
         return ((this.targetX == -1) || ((this.currX == this.targetX) && (this.currY == this.targetY)));
-    }
-
-    /**
-     * Display matrix in a friendly way
-     */
-    void display() {
-        for (char[] row : matrix) {
-            for (char cell : row) {
-                System.out.print(cell + " ");
-            }
-            System.out.println();
-        }
     }
 
     @Override

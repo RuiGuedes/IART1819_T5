@@ -28,13 +28,20 @@ class Level {
      */
     private static Map<String, Integer> searchInfo;
 
+    private static Map<Character, char[][]> preProcessedMatrix;
+
     /**
      * Initializes level class
      * @param filename Directory of the map to be read
      */
     Level(String filename) {
         try {
+            // Reads file that contains the selected level
             readFile(filename);
+
+            // Initializes agents pre-processing
+            initPreProcess();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -65,8 +72,6 @@ class Level {
 
             index++;
         }
-
-        initPreProcess();
     }
 
     /**
@@ -113,8 +118,10 @@ class Level {
      * For each agent pre-process its own matrix to be used by the heuristic function
      */
     private void initPreProcess() {
+        preProcessedMatrix = new HashMap<>();
+
         for (Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
-            agent.getValue().setMatrix(matrix);
+            preProcessedMatrix.put(agent.getKey(), agent.getValue().getPreProcessedMatrix(matrix));
         }
     }
 
@@ -250,7 +257,6 @@ class Level {
      * @return New heuristic function
      */
     static ToDoubleFunction<Node<State, Action>> createHeuristicFunction(int heuristicFunction) {
-
         if(heuristicFunction == 1)
             return new AgentAlignmentHeuristic();
         else
@@ -264,12 +270,23 @@ class Level {
      */
     private static class FreeMovementHeuristic implements ToDoubleFunction<Node<State, Action>> {
 
+        /**
+         * Get needed moves to reach target position
+         * @return Number of needed moves
+         */
+        double getNeededMoves(char key, Data agent) {
+            if(agent.getTargetX() != -1 && agent.getTargetY() != -1)
+                return Character.digit(preProcessedMatrix.get(key)[agent.getCurrY()][agent.getCurrX()], 10);
+            else
+                return 0;
+        }
+
         @Override
         public double applyAsDouble(Node<State, Action> node) {
             double result = 0;
 
             for (Map.Entry<Character, Data> agent : node.getState().getAgents().entrySet()) {
-                result += agent.getValue().getNeededMoves();
+                result += getNeededMoves(agent.getKey(), agent.getValue());
             }
 
             return result;
