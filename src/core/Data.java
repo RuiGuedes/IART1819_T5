@@ -303,7 +303,7 @@ public class Data {
             agent_actions.add("LEFT");
 
         // Comment this line to ensure actions order for all algorithms is the same
-        Collections.shuffle(agent_actions);
+        // Collections.shuffle(agent_actions);
 
         return agent_actions;
     }

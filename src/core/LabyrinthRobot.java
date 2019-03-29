@@ -6,13 +6,12 @@ import search.framework.Metrics;
 import search.framework.SearchForActions;
 import search.framework.problem.GeneralProblem;
 import search.framework.problem.Problem;
-import search.framework.qsearch.GraphSearch;
 import search.framework.qsearch.TreeSearch;
 import search.informed.AStarSearch;
 import search.informed.GreedyBestFirstSearch;
 import search.uninformed.BreadthFirstSearch;
 import search.uninformed.DepthFirstSearch;
-import search.uninformed.DepthLimitedSearch;
+import search.uninformed.IterativeDeepeningSearch;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,7 +83,7 @@ public class LabyrinthRobot {
             {
                 add("1 - Depth-First Search");
                 add("2 - Breadth-First Search");
-                add("3 - Depth-Limited Search");
+                add("3 - Iterative Deepening Search");
                 add("4 - Greedy-Best-First Search");
                 add("5 - A-StarSearch");
                 add("6 - Exit\n");
@@ -105,14 +104,13 @@ public class LabyrinthRobot {
 
             switch (option) {
                 case "1":
-                    uninformedSearch(new Level(filename), "Depth-First Search", 0);
+                    uninformedSearch(new Level(filename), "Depth-First Search");
                     break;
                 case "2":
-                    uninformedSearch(new Level(filename), "Breadth-First Search", 0);
+                    uninformedSearch(new Level(filename), "Breadth-First Search");
                     break;
                 case "3":
-                    String limit = read_input(new ArrayList<>(), "\nSelect the limit depth [" + MIN_DEPTH + " , " + MAX_DEPTH + "]: ", "Invalid limit. Try again !", MIN_DEPTH, MAX_DEPTH);
-                    uninformedSearch(new Level(filename), "Depth-Limited Search", Integer.parseInt(limit));
+                    uninformedSearch(new Level(filename), "Iterative Deepening Search");
                     break;
                 case "4":
                     String greedyHeuristic = read_input(possibleHeuristics, "Select an heuristic: ", "Invalid option. Try again !", 1, possibleHeuristics.size() - 1);
@@ -160,21 +158,20 @@ public class LabyrinthRobot {
      * Performs uninformed search
      * @param map Level chosen
      * @param algorithm Algorithm to be used
-     * @param limit Depth limit chosen
      */
-    private static void uninformedSearch(Level map, String algorithm, int limit) throws IOException, InterruptedException {
+    private static void uninformedSearch(Level map, String algorithm) throws IOException, InterruptedException {
         Problem<State, Action> problem = new GeneralProblem<>(map.getCurrState(), Level::getActions, Level::getResult,  Level::testGoal);
         SearchForActions<State, Action> search = null;
 
         switch (algorithm) {
             case "Depth-First Search":
-                search = new DepthFirstSearch<>(new GraphSearch<>());
+                search = new DepthFirstSearch<>(new TreeSearch<>());
                 break;
             case "Breadth-First Search":
                 search = new BreadthFirstSearch<>(new TreeSearch<>());
                 break;
-            case "Depth-Limited Search":
-                search = new DepthLimitedSearch<>(limit);
+            case "Iterative Deepening Search":
+                search = new IterativeDeepeningSearch<>();
                 break;
         }
 
@@ -203,10 +200,10 @@ public class LabyrinthRobot {
 
         switch (algorithm) {
             case "Greedy-Best-First Search":
-                search = new GreedyBestFirstSearch<>(new GraphSearch<>(), Level.createHeuristicFunction(heuristic));
+                search = new GreedyBestFirstSearch<>(new TreeSearch<>(), Level.createHeuristicFunction(heuristic));
                 break;
             case "A-StarSearch":
-                search = new AStarSearch<>(new GraphSearch<>(), Level.createHeuristicFunction(heuristic));
+                search = new AStarSearch<>(new TreeSearch<>(), Level.createHeuristicFunction(heuristic));
                 break;
         }
 
@@ -301,7 +298,7 @@ public class LabyrinthRobot {
         System.out.println("Nodes Expanded = " + stats.get(1));
         System.out.println("Path Cost = " + stats.get(2));
         System.out.println("Queue Size = " + stats.get(3));
-        System.out.println("Time Spent = " + elapsedTime + " m");
+        System.out.println("Time Spent = " + elapsedTime + " ms");
         System.out.println("Memory Usage = " + humanReadableByteCount(memoryUsage, true));
         System.out.println();
     }
