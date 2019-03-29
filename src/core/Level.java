@@ -21,13 +21,21 @@ class Level {
     /**
      * Current game state
      */
-    private State currState;
+    private static State initialState;
+
+    /**
+     * Current game state
+     */
+    private static State currState;
 
     /**
      * Holds all information about the visited nodes at a certain moment
      */
     private static Map<String, Integer> searchInfo;
 
+    /**
+     * Agents pre-processed matrix
+     */
     private static Map<Character, char[][]> preProcessedMatrix;
 
     /**
@@ -38,6 +46,9 @@ class Level {
         try {
             // Reads file that contains the selected level
             readFile(filename);
+
+            // Stores initial state
+            storeInitialState();
 
             // Initializes agents pre-processing
             initPreProcess();
@@ -55,7 +66,7 @@ class Level {
     private void readFile(String filename) throws FileNotFoundException {
 
         int index = 0;
-        this.currState = new State(); searchInfo = new HashMap<>();
+        currState = new State(); searchInfo = new HashMap<>();
         File fileLevel = new File(filename);
         Scanner sc =  new Scanner(fileLevel);
         Pattern pattern = Pattern.compile("[^X\\s]");
@@ -150,6 +161,21 @@ class Level {
     }
 
     /**
+     * Stores initial state
+     */
+    private void storeInitialState() {
+        initialState = new State(currState);
+    }
+
+    /**
+     * Resets current state 
+     */
+    public static void reset() {
+        currState = new State(initialState);
+        searchInfo = new HashMap<>();
+    }
+
+    /**
      * Display matrix in a friendly way
      */
     void display() {
@@ -233,7 +259,7 @@ class Level {
      */
     static State getResult(State currState, Action action) {
         State nextState = new State(currState);
-
+        System.out.println("asdasdsdasdasd + " + currState);
         String[] action_info = ((DynamicAction) action).getName().split("-");
         nextState.getAgents().get(action_info[0].charAt(0)).action(action_info[1], matrix, currState.getAgents());
 

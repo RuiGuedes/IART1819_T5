@@ -7,6 +7,7 @@ import util.Tasks;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page
@@ -69,7 +70,7 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 	private Optional<Node<S, A>> findNode(Problem<S, A> p) {
 		clearMetrics();
 		// for depth = 0 to infinity do
-		for (int i = 1; !Tasks.currIsCancelled(); i++) {
+		for (int i = 0; !Tasks.currIsCancelled(); i++) {
 			// result <- DEPTH-LIMITED-SEARCH(problem, depth)
 			DepthLimitedSearch<S, A> dls = new DepthLimitedSearch<>(i, nodeExpander);
 			Optional<Node<S, A>> result = dls.findNode(p);
