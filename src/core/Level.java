@@ -11,7 +11,7 @@ import java.util.function.ToDoubleFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Level {
+public class Level {
 
     /**
      * Bi-dimensional representation of map
@@ -259,7 +259,7 @@ class Level {
      */
     static State getResult(State currState, Action action) {
         State nextState = new State(currState);
-        System.out.println("asdasdsdasdasd + " + currState);
+        //System.out.println("asdasdsdasdasd + " + currState);
         String[] action_info = ((DynamicAction) action).getName().split("-");
         nextState.getAgents().get(action_info[0].charAt(0)).action(action_info[1], matrix, currState.getAgents());
 

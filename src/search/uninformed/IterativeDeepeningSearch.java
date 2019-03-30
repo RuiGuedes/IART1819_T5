@@ -1,5 +1,6 @@
 package search.uninformed;
 
+import core.Level;
 import search.framework.*;
 import search.framework.problem.Problem;
 import util.Tasks;
@@ -7,7 +8,6 @@ import util.Tasks;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Artificial Intelligence A Modern Approach (3rd Edition): Figure 3.18, page
@@ -78,6 +78,7 @@ public class IterativeDeepeningSearch<S, A> implements SearchForActions<S, A>, S
 			// if result != cutoff then return result
 			if (!dls.isCutoffResult(result))
 				return result;
+			Level.reset();
 		}
 		return Optional.empty();
 	}
