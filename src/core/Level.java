@@ -210,7 +210,7 @@ public class Level {
      * @return Cell identifier
      */
     private char agentAt(int x, int y) {
-        for(Map.Entry<Character, Data> agent : currState.getAgents().entrySet()) {
+        for(Map.Entry<Character, Data> agent : initialState.getAgents().entrySet()) {
             if(agent.getValue().getCurrX() == x && agent.getValue().getCurrY() == y)
                 return agent.getKey();
             else if(agent.getValue().getTargetX() == x && agent.getValue().getTargetY() == y) {

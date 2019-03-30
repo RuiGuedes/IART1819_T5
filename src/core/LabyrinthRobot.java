@@ -184,9 +184,9 @@ public class LabyrinthRobot {
         long memoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
         if(actions.isPresent())
-            displayAlgorithmInformation(actions.get(), search.getMetrics(), null, elapsedTime, memoryUsage);
+            displayAlgorithmInformation(map, actions.get(), search.getMetrics(), null, elapsedTime, memoryUsage);
         else
-            displayAlgorithmInformation(new ArrayList<>(), search.getMetrics(), null, elapsedTime, memoryUsage);
+            displayAlgorithmInformation(map, new ArrayList<>(), search.getMetrics(), null, elapsedTime, memoryUsage);
     }
 
     /**
@@ -215,7 +215,7 @@ public class LabyrinthRobot {
         long elapsedTime = System.currentTimeMillis() - start;
         long memoryUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
-        displayAlgorithmInformation(agent.getActions(), null, agent.getInstrumentation(), elapsedTime, memoryUsage);
+        displayAlgorithmInformation(map, agent.getActions(), null, agent.getInstrumentation(), elapsedTime, memoryUsage);
     }
 
     /**
@@ -242,8 +242,9 @@ public class LabyrinthRobot {
      * @param properties Algorithm metrics
      * @param elapsedTime Time elapsed
      */
-    private static void displayAlgorithmInformation(List<Action> actions, Metrics metrics, Properties properties, long elapsedTime, long memoryUsage) throws IOException, InterruptedException {
+    private static void displayAlgorithmInformation(Level map, List<Action> actions, Metrics metrics, Properties properties, long elapsedTime, long memoryUsage) throws IOException, InterruptedException {
         displayTitle();
+        map.display();
         displaySolution(actions);
         displayStatistics(metrics, properties, elapsedTime, memoryUsage);
         blockUntil();
