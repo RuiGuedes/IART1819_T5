@@ -3,6 +3,10 @@
 
 The Project was developed using **IntelliJ IDEA**. The project can be imported and ran from the IDE. However, to make running the program easier, two scripts have been created for Windows and Linux to run the already compiled program
 
+## Requirements
+
+- JDK 11 or higher
+
 ## Instructions
 
 1. Run the program from IDEA or using the `run.bat` or `rub.sh` scripts.
