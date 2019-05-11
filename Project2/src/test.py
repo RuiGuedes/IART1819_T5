@@ -23,6 +23,9 @@ Y4 = "I have had Mirena for a little over a month now. As soon as I put it in I 
 
 model = Model(Dataset('small.xlsx'))
 
-model.set_clf_to_support_vector_machine('SVR')
+model.set_classifier('SVR')
 model.train_model()
 print(model.predict(Y1))
+print(model.predict(Y2))
+print(model.predict(Y3))
+print(model.predict(Y4))
