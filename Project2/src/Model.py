@@ -1,10 +1,8 @@
 import os
-from sklearn import svm
-from sklearn import tree
 from joblib import dump, load
 from src.LemmaTokenizer import LemmaTokenizer
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.neural_network import MLPClassifier, MLPRegressor
+from sklearn.model_selection import GridSearchCV
 
 
 # ---------------------------------------------------
@@ -17,15 +15,23 @@ class Model:
     dataset = None      # Dataset object containing all dataset information
     vectorizer = None   # Model vectorizer
     clf = None          # Model classifier
+    gs_clf = None       # Model grid search classifier
+    cv = 10             # Grid search <cv> attribute
+    iid = False         # Grid search <iid> attribute
+    n_jobs = None       # Grid search <n_jobs> attribute
 
     # ---------------------------------------------------
     #   Model class default constructor
     #       + dataset: Dataset object containing all
     #                  information
     # ---------------------------------------------------
-    def __init__(self, dataset):
+    def __init__(self, dataset, cv, iid, n_jobs):
         self.dataset = dataset
         self.parse_dataset()
+
+        self.cv = cv
+        self.iid = iid
+        self.n_jobs = n_jobs
 
     # ---------------------------------------------------
     #   Function responsible for parsing the dataset
@@ -68,53 +74,33 @@ class Model:
 
     # ---------------------------------------------------
     #   Function responsible for setting the model
-    #   classifier. If already created it loads it from
+    #   grid search classifier. If already created it loads it from
     #   a file otherwise creates it
-    #       + algorithm: algorithm to be used for train-
-    #                    -ing and prediction
     # ---------------------------------------------------
-    def set_classifier(self, algorithm):
-        if os.path.isfile('../joblib/' + algorithm + '.joblib'):
-            self.clf = load('../joblib/' + algorithm + '.joblib')
+    def set_grid_search_classifier(self, parameters, algorithm):
+        if os.path.isfile('../joblib/gs_' + algorithm + '.joblib'):
+            self.gs_clf = load('../joblib/gs_' + algorithm + '.joblib')
         else:
-            self.init_classifier(algorithm)
-            dump(self.clf, '../joblib/' + algorithm + '.joblib')
-
-    # ---------------------------------------------------
-    #   Function responsible for initializing the model
-    #   classifier.
-    #       + algorithm: algorithm to be used for train-
-    #                    -ing and prediction
-    # ---------------------------------------------------
-    def init_classifier(self, algorithm):
-        if algorithm == 'SVC':
-            self.clf = svm.SVC(gamma='auto')
-        elif algorithm == 'LinearSVC':
-            self.clf = svm.LinearSVC()
-        elif algorithm == 'LinearSVR':
-            self.clf = svm.LinearSVR()
-        elif algorithm == 'SVR':
-            self.clf = svm.SVR(gamma='auto')
-        elif algorithm == 'DecisionTreeClassifier':
-            self.clf = tree.DecisionTreeClassifier()
-        elif algorithm == 'DecisionTreeRegressor':
-            self.clf = tree.DecisionTreeRegressor()
-        elif algorithm == 'MLPClassifier':
-            self.clf = MLPClassifier()
-        else:
-            self.clf = MLPRegressor()
+            self.gs_clf = GridSearchCV(self.clf, parameters, cv=self.cv, iid=self.iid, n_jobs=self.n_jobs)
+            dump(self.gs_clf, '../joblib/gs_' + algorithm + '.joblib')
 
     # ---------------------------------------------------
     #   Function responsible for training the model
     #   classifier using the X_train and X_target varia-
     #   -bles
     # ---------------------------------------------------
-    def train_model(self):
-        self.clf.fit(self.X_train, self.X_target)
+    def train_model(self, gs_cfl=False):
+        if gs_cfl:
+            self.gs_clf.fit(self.X_train, self.X_target)
+        else:
+            self.clf.fit(self.X_train, self.X_target)
 
     # ---------------------------------------------------
     #   Function responsible for predicting a rating
     #   for a certain review
     # ---------------------------------------------------
-    def predict(self, review):
-        return self.clf.predict(self.vectorizer.transform([review]))
+    def predict(self, review, gs_cfl=False):
+        if gs_cfl:
+            return self.gs_clf.predict(self.vectorizer.transform([review]))
+        else:
+            return self.clf.predict(self.vectorizer.transform([review]))

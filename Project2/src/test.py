@@ -1,5 +1,8 @@
 from src.Dataset import Dataset
-from src.Model import Model
+from src.Model import *
+from src.SVM import *
+from src.DecisionTrees import *
+from src.NeuralNetworks import *
 
 #####################
 #     TEST FILE     #
@@ -41,16 +44,21 @@ Y4 = "I have had Mirena for a little over a month now. As soon as I put it in I 
      "though I am trying now to start losing weight, so we shall see how that goes. Overall at this moment I would " \
      "recommend it to others. As long as I can off set this funk I am in. "
 
-model = Model(Dataset('small.xlsx'))
+dataset = Dataset('small.xlsx')
+model = SVR(dataset)
 
-model.set_classifier('LinearSVR')
-model.train_model()
-print(model.predict(Y1))
-print(model.predict(Y2))
-print(model.predict(Y3))
-print(model.predict(Y4))
+# CLF
 
-# [0.28074996]
-# [5.94624216]
-# [7.37084017]
-# [7.92354109]
+# model.train_model()
+# print(model.predict(Y1))
+# print(model.predict(Y2))
+# print(model.predict(Y3))
+# print(model.predict(Y4))
+
+# GRID CLF
+
+model.train_model(True)
+print(model.predict(Y1, True))
+print(model.predict(Y2, True))
+print(model.predict(Y3, True))
+print(model.predict(Y4, True))
