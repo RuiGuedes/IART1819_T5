@@ -44,21 +44,21 @@ Y4 = "I have had Mirena for a little over a month now. As soon as I put it in I 
      "though I am trying now to start losing weight, so we shall see how that goes. Overall at this moment I would " \
      "recommend it to others. As long as I can off set this funk I am in. "
 
-dataset = Dataset('small.xlsx')
-model = SVR(dataset)
+model = SVC(Dataset('small.xlsx'))
 
 # CLF
 
-# model.train_model()
-# print(model.predict(Y1))
-# print(model.predict(Y2))
-# print(model.predict(Y3))
-# print(model.predict(Y4))
+model.train_model(model.get_algorithm())
+print(model.predict(Y1))
+print(model.predict(Y2))
+print(model.predict(Y3))
+print(model.predict(Y4))
 
 # GRID CLF
 
-model.train_model(True)
-print(model.predict(Y1, True))
-print(model.predict(Y2, True))
-print(model.predict(Y3, True))
-print(model.predict(Y4, True))
+# model.train_model(model.get_algorithm(), True)
+# print(model.predict(Y1, True))
+# print(model.predict(Y2, True))
+# print(model.predict(Y3, True))
+# print(model.predict(Y4, True))
+# model.show_best_param(model.get_algorithm(), model.get_algorithm_gs_param())

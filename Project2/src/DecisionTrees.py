@@ -1,13 +1,14 @@
 import os
 from sklearn import tree
 from src.Model import Model
-from joblib import dump, load
+from joblib import load
 
 
 # ---------------------------------------------------
 #   DecisionTreeClassifier model class
 # ---------------------------------------------------
 class DecisionTreeClassifier(Model):
+    algorithm = "DecisionTreeClassifier"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -30,13 +31,27 @@ class DecisionTreeClassifier(Model):
             self.clf = load('../joblib/DecisionTreeClassifier.joblib')
         else:
             self.clf = tree.DecisionTreeClassifier()
-            dump(self.clf, '../joblib/DecisionTreeClassifier.joblib')
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters
 
 
 # ---------------------------------------------------
 #   DecisionTreeRegressor model class
 # ---------------------------------------------------
 class DecisionTreeRegressor(Model):
+    algorithm = "DecisionTreeRegressor"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -59,4 +74,17 @@ class DecisionTreeRegressor(Model):
             self.clf = load('../joblib/DecisionTreeRegressor.joblib')
         else:
             self.clf = tree.DecisionTreeRegressor()
-            dump(self.clf, '../joblib/DecisionTreeRegressor.joblib')
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters

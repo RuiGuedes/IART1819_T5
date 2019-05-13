@@ -89,11 +89,12 @@ class Model:
     #   classifier using the X_train and X_target varia-
     #   -bles
     # ---------------------------------------------------
-    def train_model(self, gs_cfl=False):
+    def train_model(self, algorithm, gs_cfl=False):
         if gs_cfl:
-            self.gs_clf.fit(self.X_train, self.X_target)
+            self.gs_clf = self.gs_clf.fit(self.X_train, self.X_target)
         else:
-            self.clf.fit(self.X_train, self.X_target)
+            self.clf = self.clf.fit(self.X_train, self.X_target)
+            dump(self.clf, '../joblib/' + algorithm + '.joblib')
 
     # ---------------------------------------------------
     #   Function responsible for predicting a rating
@@ -104,3 +105,12 @@ class Model:
             return self.gs_clf.predict(self.vectorizer.transform([review]))
         else:
             return self.clf.predict(self.vectorizer.transform([review]))
+
+    # ---------------------------------------------------
+    #   Function responsible for showing the best
+    #   parameters for a certain algorithm
+    # ---------------------------------------------------
+    def show_best_param(self, algorithm, parameters):
+        print("Best parameters for " + algorithm + " algorithm:")
+        for param_name in parameters:
+            print(param_name + ": " + self.gs_clf.best_params_[param_name])

@@ -1,13 +1,14 @@
 import os
 from sklearn import svm
 from src.Model import Model
-from joblib import dump, load
+from joblib import load
 
 
 # ---------------------------------------------------
 #   SVC model class
 # ---------------------------------------------------
 class SVC(Model):
+    algorithm = "SVC"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -29,14 +30,28 @@ class SVC(Model):
         if os.path.isfile('../joblib/SVC.joblib'):
             self.clf = load('../joblib/SVC.joblib')
         else:
-            self.clf = svm.SVC(gamma='auto')
-            dump(self.clf, '../joblib/SVC.joblib')
+            self.clf = svm.SVC(gamma=0.0001)
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters
 
 
 # ---------------------------------------------------
 #   LinearSVC model class
 # ---------------------------------------------------
 class LinearSVC(Model):
+    algorithm = "LinearSVC"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -47,7 +62,7 @@ class LinearSVC(Model):
     def __init__(self, dataset, cv=5, iid=False, n_jobs=None):
         super().__init__(dataset, cv, iid, n_jobs)
         self.set_classifier()
-        self.set_grid_search_classifier(self.parameters, 'LinearSVC')
+        self.set_grid_search_classifier(self.parameters, self.algorithm)
 
     # ---------------------------------------------------
     #   Function responsible for setting the model
@@ -59,13 +74,27 @@ class LinearSVC(Model):
             self.clf = load('../joblib/LinearSVC.joblib')
         else:
             self.clf = svm.LinearSVC()
-            dump(self.clf, '../joblib/LinearSVC.joblib')
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters
 
 
 # ---------------------------------------------------
 #   LinearSVR model class
 # ---------------------------------------------------
 class LinearSVR(Model):
+    algorithm = "LinearSVR"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -88,13 +117,27 @@ class LinearSVR(Model):
             self.clf = load('../joblib/LinearSVR.joblib')
         else:
             self.clf = svm.LinearSVR()
-            dump(self.clf, '../joblib/LinearSVR.joblib')
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters
 
 
 # ---------------------------------------------------
 #   SVR model class
 # ---------------------------------------------------
 class SVR(Model):
+    algorithm = "SVR"
     parameters = {'kernel': ('linear', 'rbf')}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -117,4 +160,17 @@ class SVR(Model):
             self.clf = load('../joblib/SVR.joblib')
         else:
             self.clf = svm.SVR(gamma='auto')
-            dump(self.clf, '../joblib/SVR.joblib')
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters

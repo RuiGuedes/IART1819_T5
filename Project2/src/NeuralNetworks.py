@@ -1,6 +1,6 @@
 import os
 from src.Model import Model
-from joblib import dump, load
+from joblib import load
 from sklearn.neural_network import MLPClassifier, MLPRegressor
 
 
@@ -8,6 +8,7 @@ from sklearn.neural_network import MLPClassifier, MLPRegressor
 #   NeuralNetworkClassifier model class
 # ---------------------------------------------------
 class NeuralNetworkClassifier(Model):
+    algorithm = "NeuralNetworkClassifier"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -30,13 +31,27 @@ class NeuralNetworkClassifier(Model):
             self.clf = load('../joblib/MLPClassifier.joblib')
         else:
             self.clf = MLPClassifier()
-            dump(self.clf, '../joblib/MLPClassifier.joblib')
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters
 
 
 # ---------------------------------------------------
 #   NeuralNetworkRegressor model class
 # ---------------------------------------------------
 class NeuralNetworkRegressor(Model):
+    algorithm = "NeuralNetworkRegressor"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
@@ -59,4 +74,17 @@ class NeuralNetworkRegressor(Model):
             self.clf = load('../joblib/MLPRegressor.joblib')
         else:
             self.clf = MLPRegressor()
-            dump(self.clf, '../joblib/MLPRegressor.joblib')
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the
+    #   algorithm name
+    # ---------------------------------------------------
+    def get_algorithm(self):
+        return self.algorithm
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the grid
+    #   search parameters
+    # ---------------------------------------------------
+    def get_algorithm_gs_param(self):
+        return self.parameters
