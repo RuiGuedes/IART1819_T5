@@ -8,18 +8,20 @@ from joblib import load
 #   SVC model class
 # ---------------------------------------------------
 class SVC(Model):
-    algorithm = "SVC"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
-    #   Model class default constructor
-    #       + dataset: Dataset object containing all
-    #                  information
+    #   SVC class constructor
+    #       + train_dataset: Dataset object containing
+    #                       all training information
+    #       + train_dataset: Dataset object containing
+    #                       all training information
     # ---------------------------------------------------
-    def __init__(self, dataset, cv=10, iid=False, n_jobs=None):
-        super().__init__(dataset, cv, iid, n_jobs)
+    def __init__(self, train_dataset, test_dataset, cv=10, iid=False, n_jobs=None, grid_search=False):
+        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "SVC")
         self.set_classifier()
-        self.set_grid_search_classifier(self.parameters, 'SVC')
+        if grid_search:
+            self.set_grid_search_classifier(self.parameters)
 
     # ---------------------------------------------------
     #   Function responsible for setting the model
@@ -51,18 +53,20 @@ class SVC(Model):
 #   LinearSVC model class
 # ---------------------------------------------------
 class LinearSVC(Model):
-    algorithm = "LinearSVC"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
-    #   Model class default constructor
-    #       + dataset: Dataset object containing all
-    #                  information
+    #   LinearSVC class constructor
+    #       + train_dataset: Dataset object containing
+    #                       all training information
+    #       + train_dataset: Dataset object containing
+    #                       all training information
     # ---------------------------------------------------
-    def __init__(self, dataset, cv=5, iid=False, n_jobs=None):
-        super().__init__(dataset, cv, iid, n_jobs)
+    def __init__(self, train_dataset, test_dataset, cv=5, iid=False, n_jobs=None, grid_search=False):
+        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "LinearSVC")
         self.set_classifier()
-        self.set_grid_search_classifier(self.parameters, self.algorithm)
+        if grid_search:
+            self.set_grid_search_classifier(self.parameters)
 
     # ---------------------------------------------------
     #   Function responsible for setting the model

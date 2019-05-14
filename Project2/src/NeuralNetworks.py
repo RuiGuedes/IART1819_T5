@@ -1,25 +1,27 @@
 import os
 from src.Model import Model
 from joblib import load
-from sklearn.neural_network import MLPClassifier, MLPRegressor
+from sklearn.neural_network import MLPClassifier
 
 
 # ---------------------------------------------------
 #   NeuralNetworkClassifier model class
 # ---------------------------------------------------
 class NeuralNetworkClassifier(Model):
-    algorithm = "NeuralNetworkClassifier"
     parameters = {}     # Grid search parameters
 
     # ---------------------------------------------------
-    #   Model class default constructor
-    #       + dataset: Dataset object containing all
-    #                  information
+    #   NeuralNetworkClassifier class constructor
+    #       + train_dataset: Dataset object containing
+    #                       all training information
+    #       + train_dataset: Dataset object containing
+    #                       all training information
     # ---------------------------------------------------
-    def __init__(self, dataset, cv=5, iid=False, n_jobs=None):
-        super().__init__(dataset, cv, iid, n_jobs)
+    def __init__(self, train_dataset, test_dataset, cv=5, iid=False, n_jobs=None, grid_search=False):
+        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "NeuralNetworkClassifier")
         self.set_classifier()
-        self.set_grid_search_classifier(self.parameters, 'NeuralNetworkClassifier')
+        if grid_search:
+            self.set_grid_search_classifier(self.parameters)
 
     # ---------------------------------------------------
     #   Function responsible for setting the model

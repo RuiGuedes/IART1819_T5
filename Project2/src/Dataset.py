@@ -11,8 +11,10 @@ from nltk.stem import SnowballStemmer
 # ---------------------------------------------------
 class Dataset:
     filename = ''  # Name of the file to be parsed
-    reviews = []   # Structure containing drug reviews
-    evaluations = []   # Structure containing drug ratings
+    stemmer = None  # Stemmer
+    words = None  # Stop words list
+    reviews = []  # Structure containing drug reviews
+    evaluations = []  # Structure containing drug ratings
     dsdict = {'review': reviews, 'evaluation': evaluations}  # Dataset dictionary
 
     # ---------------------------------------------------
@@ -31,25 +33,27 @@ class Dataset:
         df = pd.read_excel('../dataset/parsed/' + self.filename, 'Sheet1')
 
         # Builds stemmer and stopwords list
-        stemmer = SnowballStemmer('english')
-        words = stopwords.words('english')
+        self.stemmer = SnowballStemmer('english')
+        self.words = stopwords.words('english')
+
+        self.reviews = self.parse_list_of_reviews(list(df['review']))
+        self.evaluations = list(df['evaluation'])
+
+    # ---------------------------------------------------
+    #   Function responsible for parsing reviews
+    # ---------------------------------------------------
+    def parse_list_of_reviews(self, reviews):
+        df = pd.DataFrame(reviews, columns=['review'])
 
         # Remove html encoding from reviews
         df['review'] = df['review'].apply(unescape, unicode_snob=True)
 
         # Apply text stemming
-        df['review'] = df['review'].apply(lambda x: " ".join([stemmer.stem(i) for i in re.sub("[^a-zA-Z]", " ", x).split() if i not in words]).lower())
+        df['review'] = df['review'].apply(
+            lambda x: " ".join([self.stemmer.stem(i) for i in re.sub("[^a-zA-Z]", " ", x)
+                               .split() if i not in self.words]).lower())
 
-        self.parse_column(df['review'], 'review')
-        self.parse_column(df['evaluation'], 'evaluation')
-
-    # ---------------------------------------------------
-    #   Function responsible for parsing a column from
-    #   an object array to an array
-    # ---------------------------------------------------
-    def parse_column(self, column, identifier):
-        for item in column:
-            self.dsdict[identifier].append(item)
+        return list(df['review'])
 
     # ---------------------------------------------------
     #   Returns the column containing the drugs reviews
