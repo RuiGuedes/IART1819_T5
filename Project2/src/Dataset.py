@@ -1,4 +1,8 @@
+import re
 import pandas as pd
+from html2text import unescape
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
 
 
 # ---------------------------------------------------
@@ -7,10 +11,9 @@ import pandas as pd
 # ---------------------------------------------------
 class Dataset:
     filename = ''  # Name of the file to be parsed
-    drugs = []     # Structure containing drug names
     reviews = []   # Structure containing drug reviews
-    ratings = []   # Structure containing drug ratings
-    dsdict = {'drugName': drugs, 'review': reviews, 'rating': ratings}  # Dataset dictionary
+    evaluations = []   # Structure containing drug ratings
+    dsdict = {'review': reviews, 'evaluation': evaluations}  # Dataset dictionary
 
     # ---------------------------------------------------
     #   Dataset class default constructor
@@ -27,9 +30,18 @@ class Dataset:
     def parse_excel_file(self):
         df = pd.read_excel('../dataset/parsed/' + self.filename, 'Sheet1')
 
-        self.parse_column(df['drugName'], 'drugName')
-        self.parse_column(df['review'].values.astype('U'), 'review')
-        self.parse_column(df['rating'], 'rating')
+        # Builds stemmer and stopwords list
+        stemmer = SnowballStemmer('english')
+        words = stopwords.words('english')
+
+        # Remove html encoding from reviews
+        df['review'] = df['review'].apply(unescape, unicode_snob=True)
+
+        # Apply text stemming
+        df['review'] = df['review'].apply(lambda x: " ".join([stemmer.stem(i) for i in re.sub("[^a-zA-Z]", " ", x).split() if i not in words]).lower())
+
+        self.parse_column(df['review'], 'review')
+        self.parse_column(df['evaluation'], 'evaluation')
 
     # ---------------------------------------------------
     #   Function responsible for parsing a column from
@@ -40,12 +52,6 @@ class Dataset:
             self.dsdict[identifier].append(item)
 
     # ---------------------------------------------------
-    #   Returns the column containing the drugs name
-    # ---------------------------------------------------
-    def get_drugs(self):
-        return self.drugs
-
-    # ---------------------------------------------------
     #   Returns the column containing the drugs reviews
     # ---------------------------------------------------
     def get_reviews(self):
@@ -54,11 +60,11 @@ class Dataset:
     # ---------------------------------------------------
     #   Returns the column containing the drugs ratings
     # ---------------------------------------------------
-    def get_ratings(self):
-        return self.ratings
+    def get_evaluations(self):
+        return self.evaluations
 
     # ---------------------------------------------------
     #   Returns all dataset information
     # ---------------------------------------------------
     def get_info(self):
-        return [self.drugs, self.reviews, self.ratings]
+        return [self.reviews, self.evaluations]

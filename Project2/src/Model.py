@@ -40,7 +40,7 @@ class Model:
     def parse_dataset(self):
         self.init_vectorizer()
         self.init_input()
-        self.X_target = self.dataset.get_ratings()
+        self.X_target = self.dataset.get_evaluations()
 
     # ---------------------------------------------------
     #   Function responsible for initializing the model
@@ -55,9 +55,10 @@ class Model:
             self.vectorizer = load('../joblib/vectorizer.joblib')
         else:
             if lemmatizing:
-                self.vectorizer = TfidfVectorizer(tokenizer=LemmaTokenizer())
+                self.vectorizer = TfidfVectorizer(sublinear_tf=True, ngram_range=(1, 2), tokenizer=LemmaTokenizer())
             else:
-                self.vectorizer = TfidfVectorizer()
+                self.vectorizer = TfidfVectorizer(sublinear_tf=True, stop_words='english', ngram_range=(1, 2),
+                                                  lowercase=False)
 
     # ---------------------------------------------------
     #   Function responsible for initializing the model
@@ -102,9 +103,9 @@ class Model:
     # ---------------------------------------------------
     def predict(self, review, gs_cfl=False):
         if gs_cfl:
-            return self.gs_clf.predict(self.vectorizer.transform([review]))
+            return self.gs_clf.predict(self.vectorizer.transform(review))
         else:
-            return self.clf.predict(self.vectorizer.transform([review]))
+            return self.clf.predict(self.vectorizer.transform(review))
 
     # ---------------------------------------------------
     #   Function responsible for showing the best

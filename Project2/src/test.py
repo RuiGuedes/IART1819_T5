@@ -1,6 +1,7 @@
 from src.Dataset import Dataset
 from src.Model import *
 from src.SVM import *
+from src.SGD import *
 from src.DecisionTrees import *
 from src.NeuralNetworks import *
 
@@ -44,15 +45,43 @@ Y4 = "I have had Mirena for a little over a month now. As soon as I put it in I 
      "though I am trying now to start losing weight, so we shall see how that goes. Overall at this moment I would " \
      "recommend it to others. As long as I can off set this funk I am in. "
 
-model = SVC(Dataset('small.xlsx'))
+# 2.0
+Y5 = "2nd day on 5mg started to work with rock hard erections however experianced headache, lower bowel preassure. " \
+     "3rd day erections would wake me up &amp; hurt! Leg/ankles aches   severe lower bowel preassure like you need to " \
+     "go #2 but can&#039;t! Enjoyed the initial rockhard erections but not at these side effects or $230 for months " \
+     "supply! I&#039;m 50 &amp; work out 3Xs a week. Not worth side effects! "
 
+# 3.0
+Y6 = "Started Nexplanon 2 months ago because I have a minimal amount of contraception&#039;s I can take due to my " \
+     "inability to take the hormone that is used in most birth controls. I&#039;m trying to give it time because it " \
+     "is one of my only options right now. But honestly if I had options I&#039;d get it removed. I&#039;ve never had " \
+     "acne problems in my life, and immediately broke out after getting it implanted. Sex drive is completely gone, " \
+     "and I used to have sex with my boyfriend a few days a week, now its completely forced and not even fun for me " \
+     "anymore. I mean I&#039;m on birth control because I like having sex but don&#039;t want to get pregnant, " \
+     "why take a birth control that takes away sex? Very unhappy and hope that I get it back with time or I&#039;m " \
+     "getting it removed. "
+
+train = Dataset('train.xlsx')
+
+#test = Dataset('test.xlsx')
+
+#total = train.get_reviews()
+#total.append(test.get_reviews())
+
+#print(train.get_reviews())
+#print(test.get_reviews())
+#print(total)
+
+# for item in train.get_reviews()[:10]:
+#      print(item)
+
+model = SGD(train)
+test_target = [Y1, Y2, Y3, Y4, Y5, Y6]
 # CLF
 
 model.train_model(model.get_algorithm())
-print(model.predict(Y1))
-print(model.predict(Y2))
-print(model.predict(Y3))
-print(model.predict(Y4))
+print(model.predict(test_target))
+
 
 # GRID CLF
 
