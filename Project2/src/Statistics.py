@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
+from sklearn.preprocessing import label_binarize
+from sklearn.multiclass import OneVsRestClassifier
 
 
 class Statistics:
@@ -68,7 +70,7 @@ class Statistics:
             for j in range(cm.shape[1]):
                 ax.text(j, i, format(cm[i, j], fmt),
                         ha="center", va="center",
-                        color="white" if cm[i, j] > thresh else "black")
+                        color="black" if cm[i, j] > thresh else "black")
         fig.tight_layout()
         return ax
 
@@ -158,4 +160,50 @@ class Statistics:
                  label="Cross-validation score")
 
         plt.legend(loc="best")
+        return plt
+
+    def show_roc_curve(self):
+        self.plot_roc_curve()
+
+        plt.show()
+
+    def plot_roc_curve(self, n_classes=1):
+        # classifier = OneVsRestClassifier(self.model.clf)
+        # y_score = classifier.fit(self.model.train_dataset.get_reviews(),
+        #                          self.model.train_dataset.get_evaluations()).decision_function(self.model.X_train)
+
+        y_score = self.model.clf.predict_proba(self.model.vectorized_reviews)[:, 1]
+
+        # Compute ROC curve and ROC area for each class
+        fpr = dict()
+        tpr = dict()
+        roc_auc = dict()
+        # for i in range(n_classes):
+        #     fpr[i], tpr[i], _ = roc_curve(np.array(self.model.test_dataset.get_evaluations())[:, i],
+        #                                   y_score[:, i],
+        #                                   pos_label='Positive')
+        #     roc_auc[i] = auc(fpr[i], tpr[i])
+        fpr[0], tpr[0], _ = roc_curve(np.array(self.model.test_dataset.get_evaluations()),
+                                      y_score,
+                                      pos_label='Positive')
+        roc_auc[0] = auc(fpr[0], tpr[0])
+
+        # Compute micro-average ROC curve and ROC area
+        fpr["micro"], tpr["micro"], _ = roc_curve(np.array(self.model.test_dataset.get_evaluations()).ravel(),
+                                                  y_score.ravel(),
+                                                  pos_label='Positive')
+        roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+        plt.figure()
+        lw = 2
+        plt.plot(fpr[0], tpr[0], color='darkorange',
+                 lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[0])
+        plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curve (' + self.model.algorithm + ')')
+        plt.legend(loc="lower right")
+
         return plt

@@ -23,6 +23,7 @@ class Model:
     n_jobs = None           # Grid search <n_jobs> attribute
     predicted = None        # Predicted results
     statistics = None       # Model statistics
+    vectorized_reviews = None
 
     # ---------------------------------------------------
     #   Model class constructor
@@ -109,13 +110,13 @@ class Model:
     #   for a certain review
     # ---------------------------------------------------
     def predict(self, gs_cfl=False):
-        vectorized_reviews = self.vectorizer.transform(self.train_dataset.
+        self.vectorized_reviews = self.vectorizer.transform(self.train_dataset.
                                                        parse_list_of_reviews(self.test_dataset.get_reviews()))
 
         if gs_cfl:
-            self.predicted = self.gs_clf.predict(vectorized_reviews)
+            self.predicted = self.gs_clf.predict(self.vectorized_reviews)
         else:
-            self.predicted = self.clf.predict(vectorized_reviews)
+            self.predicted = self.clf.predict(self.vectorized_reviews)
 
     # ---------------------------------------------------
     #   Function responsible for showing the best
