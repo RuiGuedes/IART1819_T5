@@ -1,24 +1,28 @@
 from src.Dataset import Dataset
-from src.Model import *
-from src.SVM import *
-from src.SGD import *
-from src.DecisionTrees import *
-from src.NeuralNetworks import *
+from src.Model import Model
+from src.SVM import SVC, LinearSVC
+from src.SGD import SGD
+from src.DecisionTrees import DecisionTreeClassifier
+from src.NeuralNetworks import NeuralNetworkClassifier
 
 #####################
 #     TEST FILE     #
 #####################
+import matplotlib.pyplot as plt
 
 train = Dataset('train.xlsx')
 test = Dataset('test.xlsx')
 
-model = SGD(train, test)
+model = LinearSVC(train, test)
 
 # CLF
 
 model.train_model()
 model.predict()
-model.show_statistics()
+# model.get_statistics().show_statistics()
+model.statistics.show_learning_curve()
+
+plt.show()
 
 # GRID CLF
 

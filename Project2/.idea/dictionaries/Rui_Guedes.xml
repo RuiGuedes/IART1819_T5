@@ -3,16 +3,24 @@
     <words>
       <w>algori</w>
       <w>bles</w>
+      <w>cmap</w>
       <w>dsdict</w>
+      <w>dtype</w>
       <w>joblib</w>
       <w>lemmatize</w>
       <w>lemmatized</w>
       <w>lemmatizing</w>
+      <w>linspace</w>
+      <w>multiclass</w>
       <w>regressor</w>
       <w>scikit</w>
       <w>stemmer</w>
       <w>varia</w>
       <w>vectorizer</w>
+      <w>ylim</w>
+      <w>ymax</w>
+      <w>ymin</w>
+      <w>yvalues</w>
     </words>
   </dictionary>
 </component>

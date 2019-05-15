@@ -1,8 +1,8 @@
 import os
 from joblib import dump, load
+from src.Statistics import Statistics
 from sklearn.model_selection import GridSearchCV
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
 
 # ---------------------------------------------------
@@ -22,6 +22,7 @@ class Model:
     iid = False             # Grid search <iid> attribute
     n_jobs = None           # Grid search <n_jobs> attribute
     predicted = None        # Predicted results
+    statistics = None       # Model statistics
 
     # ---------------------------------------------------
     #   Model class constructor
@@ -38,7 +39,9 @@ class Model:
         self.cv = cv
         self.iid = iid
         self.n_jobs = n_jobs
+
         self.algorithm = algorithm
+        self.statistics = Statistics(self)
 
     # ---------------------------------------------------
     #   Function responsible for parsing the dataset
@@ -122,8 +125,3 @@ class Model:
         print("Best parameters for " + algorithm + " algorithm:")
         for param_name in parameters:
             print(param_name + ": " + self.gs_clf.best_params_[param_name])
-
-    def show_statistics(self):
-        print(confusion_matrix(self.predicted, self.test_dataset.get_evaluations()))
-        print(classification_report(self.predicted, self.test_dataset.get_evaluations()))
-        print(accuracy_score(self.predicted, self.test_dataset.get_evaluations()))
