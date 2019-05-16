@@ -1,44 +1,80 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from inspect import signature
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
-from sklearn.preprocessing import label_binarize
-from sklearn.multiclass import OneVsRestClassifier
+from sklearn.metrics import precision_recall_curve
 
 
+# ---------------------------------------------------
+#   Statistics class where all model statistics
+#   are defined
+# ---------------------------------------------------
 class Statistics:
-    model = None
+    model = None    # Associated model
 
+    # ---------------------------------------------------
+    #   Statistics class constructor
+    #       + model: Model to be analysed
+    # ---------------------------------------------------
     def __init__(self, model):
         self.model = model
 
-    def show_statistics(self):
-        print(classification_report(self.model.predicted, self.model.test_dataset.get_evaluations()))
-        print(accuracy_score(self.model.predicted, self.model.test_dataset.get_evaluations()))
+    # ---------------------------------------------------
+    #   Function responsible for displaying all the model
+    #   associated statistics
+    # ---------------------------------------------------
+    def show_all(self):
+        self.show_classification_report()
+        self.show_accuracy_score()
+        self.show_learning_curve()
+        self.show_confusion_matrix()
+        self.show_roc_curve()
+        self.show_precision_recall_curve()
 
+    # ---------------------------------------------------
+    #   Function responsible for displaying the model
+    #   classification report including precision, recall,
+    #   f1-score and support
+    # ---------------------------------------------------
+    def show_classification_report(self):
+        print('Classification report: \n')
+        print(classification_report(self.model.predicted, self.model.test_dataset.get_evaluations()))
+
+    # ---------------------------------------------------
+    #   Function responsible for displaying the accuracy
+    #   score
+    # ---------------------------------------------------
+    def show_accuracy_score(self):
+        print('Accuracy score: ' + str(accuracy_score(self.model.predicted, self.model.test_dataset.get_evaluations())))
+
+    # ---------------------------------------------------
+    #   Function responsible for displaying the confusion
+    #   matrix
+    #       + normalize: Normalized matrix (default = true)
+    # ---------------------------------------------------
     def show_confusion_matrix(self, normalize=True):
         self.plot_confusion_matrix(self.model.test_dataset.get_evaluations(), self.model.predicted,
                                    classes=['Negative', 'Positive'],
                                    normalize=normalize)
         plt.show()
 
-    @staticmethod
-    def plot_confusion_matrix(y_test, y_pred, classes,
+    # ---------------------------------------------------
+    #   Function responsible for preparing the confusion
+    #   matrix to be plotted
+    # ---------------------------------------------------
+    def plot_confusion_matrix(self, y_test, y_pred, classes,
                               normalize=False,
                               title=None,
                               cmap=plt.cm.Blues):
 
         np.set_printoptions(precision=2)
 
-        """
-        This function prints and plots the confusion matrix.
-        Normalization can be applied by setting `normalize=True`.
-        """
         if not title:
             if normalize:
-                title = 'Normalized confusion matrix'
+                title = 'Normalized confusion matrix (' + self.model.algorithm + ')'
             else:
-                title = 'Confusion matrix, without normalization'
+                title = 'Confusion matrix, without normalization (' + self.model.algorithm + ')'
 
         # Compute confusion matrix
         cm = confusion_matrix(y_test, y_pred)
@@ -74,67 +110,22 @@ class Statistics:
         fig.tight_layout()
         return ax
 
+    # ---------------------------------------------------
+    #   Function responsible for displaying the learning
+    #   curve
+    # ---------------------------------------------------
     def show_learning_curve(self):
-        self.plot_learning_curve(self.model.clf, "Learning Curves (" + self.model.algorithm + ")",
+        self.plot_learning_curve(self.model.clf, "Learning Curve (" + self.model.algorithm + ")",
                                  self.model.X_train, self.model.X_target, ylim=(0.0, 1.01), cv=5, n_jobs=1)
         plt.show()
 
+    # ---------------------------------------------------
+    #   Function responsible for preparing the learning
+    #   curve to be plotted
+    # ---------------------------------------------------
     @staticmethod
     def plot_learning_curve(estimator, title, x, y, ylim=None, cv=None,
                             n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
-        """
-        Generate a simple plot of the test and training learning curve.
-
-        Parameters
-        ----------
-        estimator : object type that implements the "fit" and "predict" methods
-            An object of that type which is cloned for each validation.
-
-        title : string
-            Title for the chart.
-
-        x : array-like, shape (n_samples, n_features)
-            Training vector, where n_samples is the number of samples and
-            n_features is the number of features.
-
-        y : array-like, shape (n_samples) or (n_samples, n_features), optional
-            Target relative to X for classification or regression;
-            None for unsupervised learning.
-
-        ylim : tuple, shape (ymin, ymax), optional
-            Defines minimum and maximum yvalues plotted.
-
-        cv : int, cross-validation generator or an iterable, optional
-            Determines the cross-validation splitting strategy.
-            Possible inputs for cv are:
-              - None, to use the default 3-fold cross-validation,
-              - integer, to specify the number of folds.
-              - :term:`CV splitter`,
-              - An iterable yielding (train, test) splits as arrays of indices.
-
-            For integer/None inputs, if ``y`` is binary or multiclass,
-            :class:`StratifiedKFold` used. If the estimator is not a classifier
-            or if ``y`` is neither binary nor multiclass, :class:`KFold` is used.
-
-            Refer :ref:`User Guide <cross_validation>` for the various
-            cross-validators that can be used here.
-
-        n_jobs : int or None, optional (default=None)
-            Number of jobs to run in parallel.
-            ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
-            ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
-            for more details.
-
-        train_sizes : array-like, shape (n_ticks,), dtype float or int
-            Relative or absolute numbers of training examples that will be used to
-            generate the learning curve. If the dtype is float, it is regarded as a
-            fraction of the maximum size of the training set (that is determined
-            by the selected validation method), i.e. it has to be within (0, 1].
-            Otherwise it is interpreted as absolute sizes of the training sets.
-            Note that for classification the number of samples usually have to
-            be big enough to contain at least one sample from each class.
-            (default: np.linspace(0.1, 1.0, 5))
-        """
         plt.figure()
         plt.title(title)
         if ylim is not None:
@@ -162,27 +153,26 @@ class Statistics:
         plt.legend(loc="best")
         return plt
 
+    # ---------------------------------------------------
+    #   Function responsible for displaying the ROC
+    #   curve
+    # ---------------------------------------------------
     def show_roc_curve(self):
         self.plot_roc_curve()
-
         plt.show()
 
-    def plot_roc_curve(self, n_classes=1):
-        # classifier = OneVsRestClassifier(self.model.clf)
-        # y_score = classifier.fit(self.model.train_dataset.get_reviews(),
-        #                          self.model.train_dataset.get_evaluations()).decision_function(self.model.X_train)
+    # ---------------------------------------------------
+    #   Function responsible for preparing the ROC
+    #   curve to be plotted
+    # ---------------------------------------------------
+    def plot_roc_curve(self):
+        y_score = self.model.get_y_score()
 
-        y_score = self.model.clf.predict_proba(self.model.vectorized_reviews)[:, 1]
-
-        # Compute ROC curve and ROC area for each class
+        # Compute ROC curve and ROC area
         fpr = dict()
         tpr = dict()
         roc_auc = dict()
-        # for i in range(n_classes):
-        #     fpr[i], tpr[i], _ = roc_curve(np.array(self.model.test_dataset.get_evaluations())[:, i],
-        #                                   y_score[:, i],
-        #                                   pos_label='Positive')
-        #     roc_auc[i] = auc(fpr[i], tpr[i])
+
         fpr[0], tpr[0], _ = roc_curve(np.array(self.model.test_dataset.get_evaluations()),
                                       y_score,
                                       pos_label='Positive')
@@ -205,5 +195,42 @@ class Statistics:
         plt.ylabel('True Positive Rate')
         plt.title('ROC Curve (' + self.model.algorithm + ')')
         plt.legend(loc="lower right")
+
+        return plt
+
+    # ---------------------------------------------------
+    #   Function responsible for displaying the
+    #   precision-recall curve
+    # ---------------------------------------------------
+    def show_precision_recall_curve(self):
+        self.plot_precision_recall_curve()
+        plt.show()
+
+    # ---------------------------------------------------
+    #   Function responsible for preparing the
+    #   precision-recall curve to be plotted
+    # ---------------------------------------------------
+    def plot_precision_recall_curve(self):
+        y_score = self.model.get_y_score()
+
+        from sklearn.metrics import average_precision_score
+        average_precision = average_precision_score(self.model.test_dataset.get_evaluations(),
+                                                    y_score, pos_label='Positive')
+
+        precision, recall, _ = precision_recall_curve(self.model.test_dataset.get_evaluations(),
+                                                      y_score, pos_label='Positive')
+
+        step_kwargs = ({'step': 'post'}
+                       if 'step' in signature(plt.fill_between).parameters
+                       else {})
+        plt.step(recall, precision, color='b', alpha=0.2,
+                 where='post')
+        plt.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
+
+        plt.xlabel('Recall')
+        plt.ylabel('Precision')
+        plt.ylim([0.0, 1.05])
+        plt.xlim([0.0, 1.0])
+        plt.title('Precision-Recall Curve (' + self.model.algorithm + '): AP={0:0.2f}'.format(average_precision))
 
         return plt

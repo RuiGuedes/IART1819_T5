@@ -50,3 +50,11 @@ class SGD(Model):
     # ---------------------------------------------------
     def get_algorithm_gs_param(self):
         return self.parameters
+
+    # ---------------------------------------------------
+    #   Function responsible for retrieving the y_score
+    #   which consists on the array having all
+    #   estimations
+    # ---------------------------------------------------
+    def get_y_score(self):
+        return self.clf.decision_function(self.vectorized_reviews)

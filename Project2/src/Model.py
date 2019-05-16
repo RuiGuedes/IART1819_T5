@@ -10,20 +10,20 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 #   present and where all algorithms are defined
 # ---------------------------------------------------
 class Model:
-    X_train = None          # Model input used to train
-    X_target = None         # Model output used to train
-    train_dataset = None    # Dataset object containing all training dataset information
-    test_dataset = None     # Dataset object containing all testing dataset information
-    vectorizer = None       # Model vectorizer
-    algorithm = None        # Model used algorithm
-    clf = None              # Model classifier
-    gs_clf = None           # Model grid search classifier
-    cv = 10                 # Grid search <cv> attribute
-    iid = False             # Grid search <iid> attribute
-    n_jobs = None           # Grid search <n_jobs> attribute
-    predicted = None        # Predicted results
-    statistics = None       # Model statistics
-    vectorized_reviews = None
+    X_train = None  # Model input used to train
+    X_target = None  # Model output used to train
+    train_dataset = None  # Dataset object containing all training dataset information
+    test_dataset = None  # Dataset object containing all testing dataset information
+    vectorizer = None  # Model vectorizer
+    algorithm = None  # Model used algorithm
+    clf = None  # Model classifier
+    gs_clf = None  # Model grid search classifier
+    cv = 10  # Grid search <cv> attribute
+    iid = False  # Grid search <iid> attribute
+    n_jobs = None  # Grid search <n_jobs> attribute
+    predicted = None  # Predicted results
+    statistics = None  # Model statistics
+    vectorized_reviews = None  # Test reviews vectorized
 
     # ---------------------------------------------------
     #   Model class constructor
@@ -111,7 +111,7 @@ class Model:
     # ---------------------------------------------------
     def predict(self, gs_cfl=False):
         self.vectorized_reviews = self.vectorizer.transform(self.train_dataset.
-                                                       parse_list_of_reviews(self.test_dataset.get_reviews()))
+                                                            parse_list_of_reviews(self.test_dataset.get_reviews()))
 
         if gs_cfl:
             self.predicted = self.gs_clf.predict(self.vectorized_reviews)
