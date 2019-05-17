@@ -9,11 +9,11 @@ from src.NeuralNetworks import NeuralNetworkClassifier
 #     TEST FILE     #
 #####################
 
-from sklearn import metrics
-train = Dataset('train.xlsx')
-test = Dataset('test.xlsx')
+# from sklearn import metrics
+train = Dataset('train_1K.xlsx')
+test = Dataset('test_1K.xlsx')
 
-model = SGD(train, test)
+model = LinearSVC(train, test)
 
 # CLF
 model.train_model()

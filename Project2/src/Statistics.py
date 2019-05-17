@@ -27,10 +27,10 @@ class Statistics:
     def show_all(self):
         self.show_classification_report()
         self.show_accuracy_score()
-        self.show_learning_curve()
-        self.show_confusion_matrix()
-        self.show_roc_curve()
-        self.show_precision_recall_curve()
+        self.show_learning_curve(True)
+        self.show_confusion_matrix(True)
+        self.show_roc_curve(True)
+        self.show_precision_recall_curve(True)
 
     # ---------------------------------------------------
     #   Function responsible for displaying the model
@@ -53,11 +53,14 @@ class Statistics:
     #   matrix
     #       + normalize: Normalized matrix (default = true)
     # ---------------------------------------------------
-    def show_confusion_matrix(self, normalize=True):
+    def show_confusion_matrix(self, show=False, normalize=True):
         self.plot_confusion_matrix(self.model.test_dataset.get_evaluations(), self.model.predicted,
                                    classes=['Negative', 'Positive'],
                                    normalize=normalize)
-        plt.show()
+        if show:
+            plt.show()
+        else:
+            return plt.gcf()
 
     # ---------------------------------------------------
     #   Function responsible for preparing the confusion
@@ -114,10 +117,13 @@ class Statistics:
     #   Function responsible for displaying the learning
     #   curve
     # ---------------------------------------------------
-    def show_learning_curve(self):
+    def show_learning_curve(self, show=False):
         self.plot_learning_curve(self.model.clf, "Learning Curve (" + self.model.algorithm + ")",
                                  self.model.X_train, self.model.X_target, ylim=(0.0, 1.01), cv=5, n_jobs=1)
-        plt.show()
+        if show:
+            plt.show()
+        else:
+            return plt.gcf()
 
     # ---------------------------------------------------
     #   Function responsible for preparing the learning
@@ -157,9 +163,13 @@ class Statistics:
     #   Function responsible for displaying the ROC
     #   curve
     # ---------------------------------------------------
-    def show_roc_curve(self):
+    def show_roc_curve(self, show=False):
         self.plot_roc_curve()
-        plt.show()
+
+        if show:
+            plt.show()
+        else:
+            return plt.gcf()
 
     # ---------------------------------------------------
     #   Function responsible for preparing the ROC
@@ -202,9 +212,13 @@ class Statistics:
     #   Function responsible for displaying the
     #   precision-recall curve
     # ---------------------------------------------------
-    def show_precision_recall_curve(self):
+    def show_precision_recall_curve(self, show=False):
         self.plot_precision_recall_curve()
-        plt.show()
+
+        if show:
+            plt.show()
+        else:
+            return plt.gcf()
 
     # ---------------------------------------------------
     #   Function responsible for preparing the
