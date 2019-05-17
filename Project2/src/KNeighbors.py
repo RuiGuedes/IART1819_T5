@@ -1,24 +1,24 @@
 import os
-from sklearn import tree
 from src.Model import Model
 from joblib import load
+from sklearn.neighbors import KNeighborsClassifier
 
 
 # ---------------------------------------------------
-#   DecisionTreeClassifier model class
+#   KNeighbors model class
 # ---------------------------------------------------
-class DecisionTreeClassifier(Model):
-    parameters = {}     # Grid search parameters
+class KNeighbors(Model):
+    parameters = {}  # Grid search parameters
 
     # ---------------------------------------------------
-    #   DecisionTreeClassifier class constructor
+    #   KNeighbors class constructor
     #       + train_dataset: Dataset object containing
     #                       all training information
     #       + train_dataset: Dataset object containing
     #                       all training information
     # ---------------------------------------------------
-    def __init__(self, train_dataset, test_dataset, grid_search=False, cv=5, iid=False, n_jobs=None):
-        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "DecisionTreeClassifier")
+    def __init__(self, train_dataset, test_dataset, grid_search=False, cv=10, iid=False, n_jobs=None):
+        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "KNeighbors")
         self.grid_search = grid_search
         self.set_classifier()
         if self.grid_search:
@@ -30,10 +30,10 @@ class DecisionTreeClassifier(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/DecisionTreeClassifier.joblib'):
-            self.clf = load('../joblib/DecisionTreeClassifier.joblib')
+        if os.path.isfile('../joblib/KNeighbors.joblib'):
+            self.clf = load('../joblib/KNeighbors.joblib')
         else:
-            self.clf = tree.DecisionTreeClassifier()
+            self.clf = KNeighborsClassifier()
 
     # ---------------------------------------------------
     #   Function responsible for retrieving the

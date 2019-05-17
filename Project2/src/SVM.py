@@ -55,4 +55,7 @@ class LinearSVC(Model):
     #   estimations
     # ---------------------------------------------------
     def get_y_score(self):
+        if self.grid_search:
+            return self.gs_clf.decision_function(self.vectorized_reviews)
+
         return self.clf.decision_function(self.vectorized_reviews)

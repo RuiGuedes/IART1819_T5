@@ -33,7 +33,8 @@ class NeuralNetworkClassifier(Model):
         if os.path.isfile('../joblib/MLPClassifier.joblib'):
             self.clf = load('../joblib/MLPClassifier.joblib')
         else:
-            self.clf = MLPClassifier()
+            self.clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
+                                     hidden_layer_sizes=(5, 2), random_state=1)
 
     # ---------------------------------------------------
     #   Function responsible for retrieving the
@@ -55,4 +56,7 @@ class NeuralNetworkClassifier(Model):
     #   estimations
     # ---------------------------------------------------
     def get_y_score(self):
+        if self.grid_search:
+            return self.gs_clf.predict_proba(self.vectorized_reviews)[:, 1]
+
         return self.clf.predict_proba(self.vectorized_reviews)[:, 1]

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from src.Dataset import Dataset
 from src.SVM import LinearSVC
 from src.SGD import SGD
+from src.KNeighbors import KNeighbors
 from src.DecisionTrees import DecisionTreeClassifier
 from src.NeuralNetworks import NeuralNetworkClassifier
 from matplotlib.backends.backend_tkagg import FigureCanvasAgg
@@ -14,17 +15,21 @@ matplotlib.use('TkAgg')
 
 
 class GUI:
-    train_dataset = None
-    test_dataset = None
-    gs_clf = None
-    model = None
-    window = None
-    dataset_size_dict = {100: '100.xlsx', 1000: '1K.xlsx', 10000: '10K.xlsx'}
-    algorithm_dict = {1: 'SGD', 2: 'SVC', 3: 'LinearSVC', 4: 'DecisionTreeClassifier', 5: 'NeuralNetworkClassifier'}
-    text_dict = {'title': None, 'content': None}
+    train_dataset = None    # Train dataset
+    test_dataset = None  # Test dataset
+    gs_clf = None   # Grid search classifier: True if active false otherwise
+    model = None    # Model selected to be used
+    window = None   # Displayed GUI window
+    dataset_size_dict = {100: '100.xlsx', 1000: '1K.xlsx', 10000: '10K.xlsx'}   # Dataset dictionary
+    algorithm_dict = {1: 'SGD', 2: 'KNeighbors', 3: 'LinearSVC',
+                      4: 'DecisionTreeClassifier', 5: 'NeuralNetworkClassifier'}    # Dataset dictionary
     statistics_dict = {1: 'Classification Report', 2: 'Accuracy Score', 3: 'Confusion Matrix',
-                       4: 'Learning Curve', 5: 'ROC Curve', 6: 'Precision Recall Curve'}
+                       4: 'Learning Curve', 5: 'ROC Curve', 6: 'Precision Recall Curve'}    # Statistics dictionary
 
+    # ---------------------------------------------------
+    #   Function responsible for initializing the GUI
+    #   and to perform each available action
+    # ---------------------------------------------------
     def start(self):
         if self.window is not None:
             self.window.Close()
@@ -38,9 +43,9 @@ class GUI:
                  sg.Radio('10K samples', "DATASET")]],
                 title='Dataset Size', title_color='Blue', relief=sg.RELIEF_SUNKEN)],
             [sg.Frame(layout=[
-                [sg.Radio('SGD', "ALGORITHM", default=True),
-                 sg.Radio('SVC', "ALGORITHM"),
-                 sg.Radio('LinearSVC', "ALGORITHM"),
+                [sg.Radio('SGD', "ALGORITHM"),
+                 sg.Radio('KNeighbors Classifier', "ALGORITHM"),
+                 sg.Radio('LinearSVC', "ALGORITHM", default=True),
                  sg.Radio('Decision Tree Classifier', "ALGORITHM"),
                  sg.Radio('Neural Network Classifier', "ALGORITHM")],
                 [sg.Checkbox('Use Grid-Search Classifier')]],
@@ -97,6 +102,10 @@ class GUI:
             elif event == 'Display':
                 self.parse_statistics(list(values.values())[9:])
 
+    # ---------------------------------------------------
+    #   Function responsible for parsing the input
+    #   relative to the dataset size selected
+    # ---------------------------------------------------
     def parse_dataset_size(self, info):
         index = 100
         for item in info:
@@ -106,8 +115,12 @@ class GUI:
                 index = index * 10
 
         self.train_dataset = Dataset('train_' + self.dataset_size_dict[index])
-        self.test_dataset = Dataset('test_' + self.dataset_size_dict[index])
+        self.test_dataset = Dataset('test_1K.xlsx')
 
+    # ---------------------------------------------------
+    #   Function responsible for parsing the input
+    #   relative to the input selected
+    # ---------------------------------------------------
     def parse_algorithm(self, info):
         index = 1
         for item in info:
@@ -116,6 +129,8 @@ class GUI:
 
                 if algorithm == 'SGD':
                     self.model = SGD(self.train_dataset, self.test_dataset, self.gs_clf)
+                elif algorithm == 'KNeighbors':
+                    self.model = KNeighbors(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'LinearSVC':
                     self.model = LinearSVC(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'DecisionTreeClassifier':
@@ -125,6 +140,10 @@ class GUI:
             else:
                 index = index + 1
 
+    # ---------------------------------------------------
+    #   Function responsible for parsing the input
+    #   relative to the statistics selected
+    # ---------------------------------------------------
     def parse_statistics(self, info):
         index = 1
         for item in info:
@@ -162,6 +181,9 @@ class GUI:
             else:
                 index = index + 1
 
+    # ---------------------------------------------------
+    #   Function responsible for drawing statistics
+    # ---------------------------------------------------
     @staticmethod
     def draw_figure(canvas, figure, loc=(0, 0)):
         figure_canvas_agg = FigureCanvasAgg(figure)
@@ -173,6 +195,11 @@ class GUI:
         tkagg.blit(photo, figure_canvas_agg.get_renderer()._renderer, colormode=2)
         return photo
 
+    # ---------------------------------------------------
+    #   Function responsible for displaying a new
+    #   window for classification report and the accuracy
+    #   score
+    # ---------------------------------------------------
     @staticmethod
     def display_new_window(title, content):
         layout = [

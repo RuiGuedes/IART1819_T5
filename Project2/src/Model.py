@@ -34,6 +34,8 @@ class Model:
     #                       all training information
     # ---------------------------------------------------
     def __init__(self, train_dataset, test_dataset, cv, iid, n_jobs, algorithm):
+        self.algorithm = algorithm
+
         self.train_dataset = train_dataset
         self.test_dataset = test_dataset
         self.parse_train_dataset()
@@ -42,7 +44,6 @@ class Model:
         self.iid = iid
         self.n_jobs = n_jobs
 
-        self.algorithm = algorithm
         self.statistics = Statistics(self)
 
     # ---------------------------------------------------
@@ -75,11 +76,11 @@ class Model:
     #   a file otherwise creates it
     # ---------------------------------------------------
     def init_input(self):
-        if os.path.isfile('../joblib/X_train.joblib'):
-            self.X_train = load('../joblib/X_train.joblib')
+        if os.path.isfile('../joblib/X_train_' + self.algorithm + '.joblib'):
+            self.X_train = load('../joblib/X_train_' + self.algorithm + '.joblib')
         else:
             self.X_train = self.vectorizer.fit_transform(self.train_dataset.get_reviews())
-            dump(self.X_train, '../joblib/X_train.joblib')
+            dump(self.X_train, '../joblib/X_train_' + self.algorithm + '.joblib')
             dump(self.vectorizer, '../joblib/vectorizer.joblib')
 
     # ---------------------------------------------------
