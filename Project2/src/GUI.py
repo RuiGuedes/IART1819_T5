@@ -5,13 +5,12 @@ from src.SVM import SVC, LinearSVC
 from src.SGD import SGD
 from src.DecisionTrees import DecisionTreeClassifier
 from src.NeuralNetworks import NeuralNetworkClassifier
-
-import matplotlib
-
-matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasAgg
 import matplotlib.backends.tkagg as tkagg
 import tkinter as Tk
+import matplotlib
+
+matplotlib.use('TkAgg')
 
 
 class GUI:
@@ -33,7 +32,7 @@ class GUI:
             [sg.Text('Drug Analysis', size=(30, 1), justification='center', font=("Courier", 30),
                      relief=sg.RELIEF_RIDGE)],
             [sg.Frame(layout=[
-                [sg.Radio('100 samples', "DATASET",),
+                [sg.Radio('100 samples', "DATASET", ),
                  sg.Radio('1K samples', "DATASET", default=True),
                  sg.Radio('10K samples', "DATASET")]],
                 title='Dataset Size', title_color='Blue', relief=sg.RELIEF_SUNKEN)],
@@ -64,7 +63,7 @@ class GUI:
         self.window = sg.Window('Machine Learning - GUI', default_element_size=(50, 5), grab_anywhere=False). \
             Layout(layout)
 
-        while True:  # Event Loop
+        while True:
             event, values = self.window.Read()
             if event in (None, 'Exit'):
                 break
@@ -112,15 +111,15 @@ class GUI:
                 algorithm = self.algorithm_dict[index]
 
                 if algorithm == 'SGD':
-                    self.model = SGD(self.train_dataset, self.test_dataset)
+                    self.model = SGD(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'SVC':
-                    self.model = SVC(self.train_dataset, self.test_dataset)
+                    self.model = SVC(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'LinearSVC':
-                    self.model = LinearSVC(self.train_dataset, self.test_dataset)
+                    self.model = LinearSVC(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'DecisionTreeClassifier':
-                    self.model = DecisionTreeClassifier(self.train_dataset, self.test_dataset)
+                    self.model = DecisionTreeClassifier(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'NeuralNetworkClassifier':
-                    self.model = NeuralNetworkClassifier(self.train_dataset, self.test_dataset)
+                    self.model = NeuralNetworkClassifier(self.train_dataset, self.test_dataset, self.gs_clf)
             else:
                 index = index + 1
 
@@ -132,9 +131,9 @@ class GUI:
                 algorithm = self.statistics_dict[index]
 
                 if algorithm == 'Classification Report':
-                    fig = self.model.statistics.show_confusion_matrix()
+                    print("TODO")
                 elif algorithm == 'Accuracy Score':
-                    self.model = SVC(self.train_dataset, self.test_dataset)
+                    print("TODO")
                 elif algorithm == 'Confusion Matrix':
                     fig = self.model.statistics.show_confusion_matrix()
                 elif algorithm == 'Learning Curve':
@@ -152,7 +151,7 @@ class GUI:
                     window = sg.Window('Statistics', force_toplevel=True).Layout(
                         layout).Finalize()
 
-                    fig_photo = self.draw_figure(window.FindElement('canvas').TKCanvas, fig)
+                    _ = self.draw_figure(window.FindElement('canvas').TKCanvas, fig)
 
                     _, _ = window.Read()
                     plt.close()
@@ -162,10 +161,6 @@ class GUI:
 
     @staticmethod
     def draw_figure(canvas, figure, loc=(0, 0)):
-        """ Draw a matplotlib figure onto a Tk canvas
-        loc: location of top-left corner of figure on canvas in pixels.
-        Inspired by matplotlib source: lib/matplotlib/backends/backend_tkagg.py
-        """
         figure_canvas_agg = FigureCanvasAgg(figure)
         figure_canvas_agg.draw()
         figure_x, figure_y, figure_w, figure_h = figure.bbox.bounds

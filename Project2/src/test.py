@@ -13,18 +13,15 @@ from src.NeuralNetworks import NeuralNetworkClassifier
 train = Dataset('train_1K.xlsx')
 test = Dataset('test_1K.xlsx')
 
-model = LinearSVC(train, test)
+model = LinearSVC(train, test, True)
 
 # CLF
-model.train_model()
-model.predict()
-model.statistics.show_all()
+# model.train_model()
+# model.predict()
+# model.statistics.show_all()
 
 # GRID CLF
 
-# model.train_model(model.get_algorithm(), True)
-# print(model.predict(Y1, True))
-# print(model.predict(Y2, True))
-# print(model.predict(Y3, True))
-# print(model.predict(Y4, True))
+model.train_model(True)
+model.predict(True)
 # model.show_best_param(model.get_algorithm(), model.get_algorithm_gs_param())
