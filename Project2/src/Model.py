@@ -18,6 +18,7 @@ class Model:
     algorithm = None  # Model used algorithm
     clf = None  # Model classifier
     gs_clf = None  # Model grid search classifier
+    grid_search = None #
     cv = 10  # Grid search <cv> attribute
     iid = False  # Grid search <iid> attribute
     n_jobs = None  # Grid search <n_jobs> attribute
@@ -98,8 +99,8 @@ class Model:
     #   classifier using the X_train and X_target varia-
     #   -bles
     # ---------------------------------------------------
-    def train_model(self, gs_cfl=False):
-        if gs_cfl:
+    def train_model(self):
+        if self.grid_search:
             self.gs_clf = self.gs_clf.fit(self.X_train, self.X_target)
         else:
             self.clf = self.clf.fit(self.X_train, self.X_target)
@@ -109,11 +110,11 @@ class Model:
     #   Function responsible for predicting a rating
     #   for a certain review
     # ---------------------------------------------------
-    def predict(self, gs_cfl=False):
+    def predict(self):
         self.vectorized_reviews = self.vectorizer.transform(self.train_dataset.
                                                             parse_list_of_reviews(self.test_dataset.get_reviews()))
 
-        if gs_cfl:
+        if self.grid_search:
             self.predicted = self.gs_clf.predict(self.vectorized_reviews)
         else:
             self.predicted = self.clf.predict(self.vectorized_reviews)

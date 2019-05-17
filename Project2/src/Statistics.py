@@ -25,8 +25,8 @@ class Statistics:
     #   associated statistics
     # ---------------------------------------------------
     def show_all(self):
-        self.show_classification_report()
-        self.show_accuracy_score()
+        self.show_classification_report(True)
+        self.show_accuracy_score(True)
         self.show_learning_curve(True)
         self.show_confusion_matrix(True)
         self.show_roc_curve(True)
@@ -37,16 +37,23 @@ class Statistics:
     #   classification report including precision, recall,
     #   f1-score and support
     # ---------------------------------------------------
-    def show_classification_report(self):
-        print('Classification report: \n')
-        print(classification_report(self.model.predicted, self.model.test_dataset.get_evaluations()))
+    def show_classification_report(self, show=False):
+        if show:
+            print('Classification report: \n')
+            print(classification_report(self.model.predicted, self.model.test_dataset.get_evaluations()))
+        else:
+            return classification_report(self.model.predicted, self.model.test_dataset.get_evaluations())
 
     # ---------------------------------------------------
     #   Function responsible for displaying the accuracy
     #   score
     # ---------------------------------------------------
-    def show_accuracy_score(self):
-        print('Accuracy score: ' + str(accuracy_score(self.model.predicted, self.model.test_dataset.get_evaluations())))
+    def show_accuracy_score(self, show=False):
+        if show:
+            print('Accuracy score: ' + str(accuracy_score(self.model.predicted,
+                                                          self.model.test_dataset.get_evaluations())))
+        else:
+            return str(accuracy_score(self.model.predicted, self.model.test_dataset.get_evaluations()))
 
     # ---------------------------------------------------
     #   Function responsible for displaying the confusion
@@ -118,7 +125,12 @@ class Statistics:
     #   curve
     # ---------------------------------------------------
     def show_learning_curve(self, show=False):
-        self.plot_learning_curve(self.model.clf, "Learning Curve (" + self.model.algorithm + ")",
+        estimator = self.model.clf
+
+        if self.model.grid_search:
+            estimator = self.model.gs_clf
+
+        self.plot_learning_curve(estimator, "Learning Curve (" + self.model.algorithm + ")",
                                  self.model.X_train, self.model.X_target, ylim=(0.0, 1.01), cv=5, n_jobs=1)
         if show:
             plt.show()

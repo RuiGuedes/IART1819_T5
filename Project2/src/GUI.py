@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 from src.Dataset import Dataset
-from src.SVM import SVC, LinearSVC
+from src.SVM import LinearSVC
 from src.SGD import SGD
 from src.DecisionTrees import DecisionTreeClassifier
 from src.NeuralNetworks import NeuralNetworkClassifier
@@ -21,6 +21,7 @@ class GUI:
     window = None
     dataset_size_dict = {100: '100.xlsx', 1000: '1K.xlsx', 10000: '10K.xlsx'}
     algorithm_dict = {1: 'SGD', 2: 'SVC', 3: 'LinearSVC', 4: 'DecisionTreeClassifier', 5: 'NeuralNetworkClassifier'}
+    text_dict = {'title': None, 'content': None}
     statistics_dict = {1: 'Classification Report', 2: 'Accuracy Score', 3: 'Confusion Matrix',
                        4: 'Learning Curve', 5: 'ROC Curve', 6: 'Precision Recall Curve'}
 
@@ -32,7 +33,7 @@ class GUI:
             [sg.Text('Drug Analysis', size=(30, 1), justification='center', font=("Courier", 30),
                      relief=sg.RELIEF_RIDGE)],
             [sg.Frame(layout=[
-                [sg.Radio('100 samples', "DATASET", ),
+                [sg.Radio('100 samples', "DATASET"),
                  sg.Radio('1K samples', "DATASET", default=True),
                  sg.Radio('10K samples', "DATASET")]],
                 title='Dataset Size', title_color='Blue', relief=sg.RELIEF_SUNKEN)],
@@ -57,7 +58,10 @@ class GUI:
                 [sg.Checkbox('ROC Curve')],
                 [sg.Checkbox('Precision Recall Curve')],
                 [sg.Button('Display', button_color=('white', 'grey'), disabled=True, key='Display')]],
-                title='Statistics', key='Statistics', title_color='Blue', relief=sg.RELIEF_SUNKEN)]
+                title='Statistics', key='Statistics', title_color='Blue', relief=sg.RELIEF_SUNKEN)],
+            [sg.Frame(layout=[
+                [sg.Text('', key='TextContent')]],
+                title='', key='Text', visible=False, title_color='Blue', relief=sg.RELIEF_SUNKEN)]
         ]
 
         self.window = sg.Window('Machine Learning - GUI', default_element_size=(50, 5), grab_anywhere=False). \
@@ -69,22 +73,22 @@ class GUI:
                 break
             if event == 'Initialize':
                 self.parse_dataset_size(list(values.values())[:3])
-                self.parse_algorithm(list(values.values())[3:8])
                 self.gs_clf = list(values.values())[8]
+                self.parse_algorithm(list(values.values())[3:8])
 
                 self.window.Element('Initialize').Update(disabled=True, button_color=('white', 'grey'))
                 self.window.Element('Train').Update(disabled=False, button_color=('white', 'green'))
 
                 self.window.Refresh()
             elif event == 'Train':
-                self.model.train_model(self.gs_clf)
+                self.model.train_model()
 
                 self.window.Element('Train').Update(disabled=True, button_color=('white', 'grey'))
                 self.window.Element('Predict').Update(disabled=False, button_color=('white', 'green'))
 
                 self.window.Refresh()
             elif event == 'Predict':
-                self.model.predict(self.gs_clf)
+                self.model.predict()
 
                 self.window.Element('Predict').Update(disabled=True, button_color=('white', 'grey'))
                 self.window.Element('Display').Update(disabled=False, button_color=('white', 'green'))
@@ -112,8 +116,6 @@ class GUI:
 
                 if algorithm == 'SGD':
                     self.model = SGD(self.train_dataset, self.test_dataset, self.gs_clf)
-                elif algorithm == 'SVC':
-                    self.model = SVC(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'LinearSVC':
                     self.model = LinearSVC(self.train_dataset, self.test_dataset, self.gs_clf)
                 elif algorithm == 'DecisionTreeClassifier':
@@ -131,9 +133,9 @@ class GUI:
                 algorithm = self.statistics_dict[index]
 
                 if algorithm == 'Classification Report':
-                    print("TODO")
+                    self.display_new_window(algorithm, self.model.statistics.show_classification_report())
                 elif algorithm == 'Accuracy Score':
-                    print("TODO")
+                    self.display_new_window(algorithm, self.model.statistics.show_accuracy_score())
                 elif algorithm == 'Confusion Matrix':
                     fig = self.model.statistics.show_confusion_matrix()
                 elif algorithm == 'Learning Curve':
@@ -155,7 +157,8 @@ class GUI:
 
                     _, _ = window.Read()
                     plt.close()
-                    index = index + 1
+
+                index = index + 1
             else:
                 index = index + 1
 
@@ -169,6 +172,21 @@ class GUI:
         canvas.create_image(loc[0] + figure_w / 2, loc[1] + figure_h / 2, image=photo)
         tkagg.blit(photo, figure_canvas_agg.get_renderer()._renderer, colormode=2)
         return photo
+
+    @staticmethod
+    def display_new_window(title, content):
+        layout = [
+            [sg.Text('Statistics', size=(30, 1), justification='center', font=("Courier", 30),
+                     relief=sg.RELIEF_RIDGE)],
+            [sg.Frame(layout=[
+                [sg.Text(content, key='TextContent')]],
+                title=title, key='Text', title_color='Blue', relief=sg.RELIEF_SUNKEN)]
+        ]
+
+        statistics_window = sg.Window('Statistics', default_element_size=(50, 5), grab_anywhere=False). \
+            Layout(layout)
+
+        _, _ = statistics_window.Read()
 
 
 GUI().start()

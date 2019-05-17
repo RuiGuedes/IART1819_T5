@@ -19,8 +19,9 @@ class NeuralNetworkClassifier(Model):
     # ---------------------------------------------------
     def __init__(self, train_dataset, test_dataset, grid_search=False, cv=5, iid=False, n_jobs=None):
         super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "NeuralNetworkClassifier")
+        self.grid_search = grid_search
         self.set_classifier()
-        if grid_search:
+        if self.grid_search:
             self.set_grid_search_classifier(self.parameters)
 
     # ---------------------------------------------------
