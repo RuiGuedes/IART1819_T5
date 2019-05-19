@@ -129,7 +129,14 @@ class Model:
     #   Function responsible for showing the best
     #   parameters for a certain algorithm
     # ---------------------------------------------------
-    def show_best_param(self, algorithm, parameters):
-        print("Best parameters for " + algorithm + " algorithm:")
-        for param_name in parameters:
-            print(param_name + ": " + self.gs_clf.best_params_[param_name])
+    def show_best_param(self, parameters, show=False):
+        if show:
+            print("Best parameters for " + self.algorithm + " algorithm:")
+            for param_name in parameters:
+                print(param_name + ": " + str(self.gs_clf.best_params_[param_name]))
+        else:
+            value = "Best parameters for " + self.algorithm + " algorithm:\n"
+            for param_name in parameters:
+                value = value + param_name + ": " + str(self.gs_clf.best_params_[param_name]) + '\n'
+
+            return value

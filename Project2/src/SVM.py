@@ -8,7 +8,8 @@ from joblib import load
 #   LinearSVC model class
 # ---------------------------------------------------
 class LinearSVC(Model):
-    parameters = {}  # Grid search parameters
+    parameters = {'loss': ('hinge', 'squared_hinge'),
+                  'tol': (1e-2, 1e-4)}  # Grid search parameters
 
     # ---------------------------------------------------
     #   LinearSVC class constructor

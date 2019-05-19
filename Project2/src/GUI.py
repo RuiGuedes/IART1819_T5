@@ -20,11 +20,13 @@ class GUI:
     gs_clf = None   # Grid search classifier: True if active false otherwise
     model = None    # Model selected to be used
     window = None   # Displayed GUI window
+    lock = False    # Lock initialize options
+    best_param_state = True     # Is grid search: True or False
     dataset_size_dict = {100: '100.xlsx', 1000: '1K.xlsx', 10000: '10K.xlsx'}   # Dataset dictionary
     algorithm_dict = {1: 'SGD', 2: 'KNeighbors', 3: 'LinearSVC',
                       4: 'DecisionTreeClassifier', 5: 'NeuralNetworkClassifier'}    # Dataset dictionary
-    statistics_dict = {1: 'Classification Report', 2: 'Accuracy Score', 3: 'Confusion Matrix',
-                       4: 'Learning Curve', 5: 'ROC Curve', 6: 'Precision Recall Curve'}    # Statistics dictionary
+    statistics_dict = {1: 'Classification Report', 2: 'Accuracy Score', 3: 'Best Parameters', 4: 'Confusion Matrix',
+                       5: 'Learning Curve', 6: 'ROC Curve', 7: 'Precision Recall Curve'}    # Statistics dictionary
 
     # ---------------------------------------------------
     #   Function responsible for initializing the GUI
@@ -48,7 +50,7 @@ class GUI:
                  sg.Radio('LinearSVC', "ALGORITHM", default=True),
                  sg.Radio('Decision Tree Classifier', "ALGORITHM"),
                  sg.Radio('Neural Network Classifier', "ALGORITHM")],
-                [sg.Checkbox('Use Grid-Search Classifier')]],
+                [sg.Checkbox('Use Grid-Search Classifier', key='Grid-Search', enable_events=True)]],
                 title='Algorithm', title_color='Black', relief=sg.RELIEF_SUNKEN)],
             [sg.Frame(layout=[
                 [sg.Button('Initialize', button_color=('white', 'green'), disabled=False, key='Initialize'),
@@ -58,6 +60,7 @@ class GUI:
             [sg.Frame(layout=[
                 [sg.Checkbox('Classification Report')],
                 [sg.Checkbox('Accuracy Score')],
+                [sg.Checkbox('Best Parameters', key='Best-Param', disabled=self.best_param_state)],
                 [sg.Checkbox('Confusion Matrix')],
                 [sg.Checkbox('Learning Curve')],
                 [sg.Checkbox('ROC Curve')],
@@ -77,6 +80,7 @@ class GUI:
             if event in (None, 'Exit'):
                 break
             if event == 'Initialize':
+                self.lock = True
                 self.parse_dataset_size(list(values.values())[:3])
                 self.gs_clf = list(values.values())[8]
                 self.parse_algorithm(list(values.values())[3:8])
@@ -99,6 +103,14 @@ class GUI:
                 self.window.Element('Display').Update(disabled=False, button_color=('white', 'green'))
 
                 self.window.Refresh()
+            elif event == 'Grid-Search':
+                if not self.lock:
+                    if self.best_param_state:
+                        self.best_param_state = False
+                    else:
+                        self.best_param_state = True
+
+                    self.window.Element('Best-Param').Update(disabled=self.best_param_state)
             elif event == 'Display':
                 self.parse_statistics(list(values.values())[9:])
 
@@ -155,6 +167,8 @@ class GUI:
                     self.display_new_window(algorithm, self.model.statistics.show_classification_report())
                 elif algorithm == 'Accuracy Score':
                     self.display_new_window(algorithm, self.model.statistics.show_accuracy_score())
+                elif algorithm == 'Best Parameters':
+                    self.display_new_window(algorithm, self.model.show_best_param(self.model.parameters))
                 elif algorithm == 'Confusion Matrix':
                     fig = self.model.statistics.show_confusion_matrix()
                 elif algorithm == 'Learning Curve':
