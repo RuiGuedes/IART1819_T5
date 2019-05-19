@@ -31,8 +31,8 @@ class SGD(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/SGD.joblib'):
-            self.clf = load('../joblib/SGD.joblib')
+        if os.path.isfile('../joblib/SGD' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.clf = load('../joblib/SGD' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
         else:
             self.clf = SGDClassifier(loss='hinge', penalty='l2',
                                      alpha=1e-3, random_state=42,

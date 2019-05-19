@@ -30,8 +30,9 @@ class DecisionTreeClassifier(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/DecisionTreeClassifier.joblib'):
-            self.clf = load('../joblib/DecisionTreeClassifier.joblib')
+        if os.path.isfile('../joblib/DecisionTreeClassifier' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.clf = load('../joblib/DecisionTreeClassifier' + '_' + self.train_dataset.get_dataset_size()
+                            + '.joblib')
         else:
             self.clf = tree.DecisionTreeClassifier()
 

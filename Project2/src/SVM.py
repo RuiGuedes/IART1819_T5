@@ -8,7 +8,7 @@ from joblib import load
 #   LinearSVC model class
 # ---------------------------------------------------
 class LinearSVC(Model):
-    parameters = {}     # Grid search parameters
+    parameters = {}  # Grid search parameters
 
     # ---------------------------------------------------
     #   LinearSVC class constructor
@@ -30,8 +30,8 @@ class LinearSVC(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/LinearSVC.joblib'):
-            self.clf = load('../joblib/LinearSVC.joblib')
+        if os.path.isfile('../joblib/LinearSVC' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.clf = load('../joblib/LinearSVC' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
         else:
             self.clf = svm.LinearSVC()
 

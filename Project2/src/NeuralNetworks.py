@@ -8,7 +8,7 @@ from sklearn.neural_network import MLPClassifier
 #   NeuralNetworkClassifier model class
 # ---------------------------------------------------
 class NeuralNetworkClassifier(Model):
-    parameters = {}     # Grid search parameters
+    parameters = {}  # Grid search parameters
 
     # ---------------------------------------------------
     #   NeuralNetworkClassifier class constructor
@@ -30,8 +30,8 @@ class NeuralNetworkClassifier(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/MLPClassifier.joblib'):
-            self.clf = load('../joblib/MLPClassifier.joblib')
+        if os.path.isfile('../joblib/MLPClassifier' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.clf = load('../joblib/MLPClassifier' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
         else:
             self.clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
                                      hidden_layer_sizes=(5, 2), random_state=1)

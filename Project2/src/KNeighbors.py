@@ -30,8 +30,8 @@ class KNeighbors(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/KNeighbors.joblib'):
-            self.clf = load('../joblib/KNeighbors.joblib')
+        if os.path.isfile('../joblib/KNeighbors' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.clf = load('../joblib/KNeighbors' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
         else:
             self.clf = KNeighborsClassifier()
 

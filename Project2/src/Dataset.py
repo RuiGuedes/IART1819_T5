@@ -72,3 +72,12 @@ class Dataset:
     # ---------------------------------------------------
     def get_info(self):
         return [self.reviews, self.evaluations]
+
+    # ---------------------------------------------------
+    #   Returns dataset size information
+    # ---------------------------------------------------
+    def get_dataset_size(self):
+        if len(self.reviews) == 100:
+            return str(100)
+        else:
+            return str(int(len(self.reviews) / 1000)) + 'K'

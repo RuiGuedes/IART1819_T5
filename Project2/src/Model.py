@@ -18,7 +18,7 @@ class Model:
     algorithm = None  # Model used algorithm
     clf = None  # Model classifier
     gs_clf = None  # Model grid search classifier
-    grid_search = None #
+    grid_search = None  #
     cv = 10  # Grid search <cv> attribute
     iid = False  # Grid search <iid> attribute
     n_jobs = None  # Grid search <n_jobs> attribute
@@ -76,11 +76,14 @@ class Model:
     #   a file otherwise creates it
     # ---------------------------------------------------
     def init_input(self):
-        if os.path.isfile('../joblib/X_train_' + self.algorithm + '.joblib'):
-            self.X_train = load('../joblib/X_train_' + self.algorithm + '.joblib')
+        if os.path.isfile('../joblib/X_train_' + self.algorithm + '_' + self.train_dataset.get_dataset_size()
+                          + '.joblib'):
+            self.X_train = load('../joblib/X_train_' + self.algorithm + '_' + self.train_dataset.get_dataset_size()
+                                + '.joblib')
         else:
             self.X_train = self.vectorizer.fit_transform(self.train_dataset.get_reviews())
-            dump(self.X_train, '../joblib/X_train_' + self.algorithm + '.joblib')
+            dump(self.X_train, '../joblib/X_train_' + self.algorithm + '_' + self.train_dataset.get_dataset_size()
+                 + '.joblib')
             dump(self.vectorizer, '../joblib/vectorizer.joblib')
 
     # ---------------------------------------------------
@@ -89,11 +92,13 @@ class Model:
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_grid_search_classifier(self, parameters):
-        if os.path.isfile('../joblib/gs_' + self.algorithm + '.joblib'):
-            self.gs_clf = load('../joblib/gs_' + self.algorithm + '.joblib')
+        if os.path.isfile('../joblib/gs_' + self.algorithm + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.gs_clf = load('../joblib/gs_' + self.algorithm + '_' + self.train_dataset.get_dataset_size()
+                               + '.joblib')
         else:
             self.gs_clf = GridSearchCV(self.clf, parameters, cv=self.cv, iid=self.iid, n_jobs=self.n_jobs)
-            dump(self.gs_clf, '../joblib/gs_' + self.algorithm + '.joblib')
+            dump(self.gs_clf, '../joblib/gs_' + self.algorithm + '_' + self.train_dataset.get_dataset_size()
+                 + '.joblib')
 
     # ---------------------------------------------------
     #   Function responsible for training the model
@@ -105,7 +110,7 @@ class Model:
             self.gs_clf = self.gs_clf.fit(self.X_train, self.X_target)
         else:
             self.clf = self.clf.fit(self.X_train, self.X_target)
-            dump(self.clf, '../joblib/' + self.algorithm + '.joblib')
+            dump(self.clf, '../joblib/' + self.algorithm + '_' + self.train_dataset.get_dataset_size() + '.joblib')
 
     # ---------------------------------------------------
     #   Function responsible for predicting a rating
