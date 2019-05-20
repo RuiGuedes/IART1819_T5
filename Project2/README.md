@@ -13,4 +13,7 @@
 2. Download the [Dependencies Set](https://drive.google.com/open?id=1SNy0JsSmaIQgPMV7PEPi5lQXrnb02e_2) and add the Libraries to
 the installed python interpreter
 
-3. Open the Project with PyCharm and execute GUI.py (Run -> Run 'GUI')
+3. **Open** the Project with PyCharm and download the stopwords dictionary
+    - Using the Python Terminal: `import nltk` and `nltk.download('stopwords')`
+
+4. Using PyCharm, run GUI.py (Run -> Run 'GUI')
