@@ -2,13 +2,13 @@
 
 ## Dependencies
 
-- Python 3.7 - 32 bits
+- [Python 3.7 - 32 bits](https://www.python.org/downloads/release/python-372/)
 - [Python Dependencies Set](https://www.4shared.com/zip/spH1oXJHee/Dependancy_Set.html)
-- PyCharm
+- [PyCharm](https://www.jetbrains.com/pycharm/)
 
 ## Instructions
 
-1. Install the required python interpreter (Python37-32)
+1. Install the required python interpreter (Python 3.7 - 32bits)
 
 2. Download the [Dependencies Set](https://www.4shared.com/zip/spH1oXJHee/Dependancy_Set.html) and add the Libraries to
 the installed python interpreter
